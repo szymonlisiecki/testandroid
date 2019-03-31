@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.myapplication.Utils.BottomNavigationViewHelper;
 
@@ -22,6 +23,8 @@ public class LikesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.d(TAG, "OnCreate: started LikesActivity");
         setupBottonNavigationView();
+
+        Toast.makeText(this, "Likes Activity", Toast.LENGTH_SHORT).show();
     }
 
     private void setupBottonNavigationView(){

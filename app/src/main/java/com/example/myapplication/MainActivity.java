@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.myapplication.Utils.BottomNavigationViewHelper;
 
@@ -22,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate: starting");
+        setupBottonNavigationView();
+        Toast.makeText(this, "MainActivity", Toast.LENGTH_SHORT).show();
     }
 
     private void setupBottonNavigationView(){

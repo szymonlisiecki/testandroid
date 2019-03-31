@@ -19,6 +19,8 @@ public class BottomNavigationViewHelper {
 
     public static void setupBottomNavigationView(BottomNavigationView bottomNavigationView){
         //tutaj powinny być wywolane metody z gita(paczka ktora nei dziala)
+
+
     }
 
 
