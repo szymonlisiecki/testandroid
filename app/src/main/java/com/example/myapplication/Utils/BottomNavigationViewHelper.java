@@ -2,17 +2,16 @@ package com.example.myapplication.Utils;
 
 import android.content.Context;
 import android.content.Intent;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.view.MenuItem;
 
-import com.example.myapplication.LikesActivity;
-import com.example.myapplication.MainActivity;
-import com.example.myapplication.ProfileActivity;
+import com.example.myapplication.Likes.LikesActivity;
+import com.example.myapplication.home.MainActivity;
+import com.example.myapplication.Profile.ProfileActivity;
 import com.example.myapplication.R;
-import com.example.myapplication.SearchActivity;
-import com.example.myapplication.ShareActivity;
+import com.example.myapplication.Search.SearchActivity;
+import com.example.myapplication.Share.ShareActivity;
 
 public class BottomNavigationViewHelper {
     private static final String TAG = "BottomNavigationViewHelper";

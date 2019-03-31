@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Likes;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,20 +10,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.myapplication.R;
 import com.example.myapplication.Utils.BottomNavigationViewHelper;
 
-public class SearchActivity extends AppCompatActivity {
-    private static final String TAG = "SearchActivity";
-    private static final int ACTIVITY_NUM = 1;
-    private Context mContext = SearchActivity.this;
+public class LikesActivity extends AppCompatActivity {
+    private static final String TAG = "LikesActivity";
+    private static final int ACTIVITY_NUM = 3;
+    private Context mContext = LikesActivity.this;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d(TAG, "OnCreate: started search");
+        Log.d(TAG, "OnCreate: started LikesActivity");
         setupBottonNavigationView();
-        Toast.makeText(this, "Search Activity", Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(this, "Likes Activity", Toast.LENGTH_SHORT).show();
     }
 
     private void setupBottonNavigationView(){

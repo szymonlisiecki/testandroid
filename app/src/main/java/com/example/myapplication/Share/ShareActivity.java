@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Share;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,12 +9,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.myapplication.R;
 import com.example.myapplication.Utils.BottomNavigationViewHelper;
 
-public class ProfileActivity extends AppCompatActivity {
-    private static final String TAG = "ProfileActivity";
-    private static final int ACTIVITY_NUM = 4;
-    private Context mContext = ProfileActivity.this;
+public class ShareActivity extends AppCompatActivity {
+    private static final String TAG = "ShareActivity";
+    private static final int ACTIVITY_NUM = 2;
+    private Context mContext = ShareActivity.this;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
