@@ -21,10 +21,11 @@ public class BottomNavigationViewHelper {
         //tutaj powinny być wywolane metody z gita(paczka ktora nei dziala)
     }
 
+
     public static void enableNavigation(final Context context, BottomNavigationView view){
-        view.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
+        view.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onNavigationItemReselected(@NonNull MenuItem item) {
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
 
                     case R.id.ic_house:
@@ -34,20 +35,26 @@ public class BottomNavigationViewHelper {
 
                     case R.id.ic_search:
                         Intent intent2 = new Intent(context, SearchActivity.class);//ACTIVITY_NUM 1
+                        context.startActivity(intent2);
                         break;
 
                     case R.id.ic_circle:
                         Intent intent3 = new Intent(context, ShareActivity.class);//ACTIVITY_NUM 2
+                        context.startActivity(intent3);
                         break;
 
                     case R.id.ic_alert:
                         Intent intent4 = new Intent(context, LikesActivity.class);//ACTIVITY_NUM 3
+                        context.startActivity(intent4);
                         break;
 
                     case R.id.ic_android:
                         Intent intent5 = new Intent(context, ProfileActivity.class);//ACTIVITY_NUM 4
+                        context.startActivity(intent5);
                         break;
                 }
+
+                return false;
             }
         });
     }
