@@ -33,6 +33,15 @@ public class ShareActivity extends AppCompatActivity {
         //narazie bez sprawdzania uprawnien
         setupViewPager();
     }
+    public int getCurrentTabNumber() {
+        /*
+        zwraca numer zakladki
+        0 = GalleryFragment
+        1 = PhotoFragment
+         */
+        return mViewPager.getCurrentItem();
+
+    }
     private void setupViewPager(){
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new GalleryFragment());
