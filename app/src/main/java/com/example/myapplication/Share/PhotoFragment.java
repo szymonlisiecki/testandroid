@@ -33,7 +33,7 @@ public class PhotoFragment extends Fragment {
             public void onClick(View v) {
                 Log.d(TAG, "onClick: Launching camera");
                // if(((ShareActivity)getActivity()).getCurrentTabNumber() == PHOTO_FRAGMENT_NUM){
-                //TODO 
+                //TODO
                 // dodac sprawdzanie uprawnien w telefonie
 
                         Log.d(TAG, "onClick: starting camera");
