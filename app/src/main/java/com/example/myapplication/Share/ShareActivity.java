@@ -16,6 +16,8 @@ import com.example.myapplication.R;
 import com.example.myapplication.Utils.BottomNavigationViewHelper;
 import com.example.myapplication.home.SectionsPagerAdapter;
 
+import java.util.Objects;
+
 public class ShareActivity extends AppCompatActivity {
     private static final String TAG = "ShareActivity";
     private static final int ACTIVITY_NUM = 2;
@@ -33,21 +35,26 @@ public class ShareActivity extends AppCompatActivity {
     }
     private void setupViewPager(){
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        //adapter.addFragment(new GalleryFragment());
-        //adapter.addFragment(new PhotoFragment());
+        adapter.addFragment(new GalleryFragment());
+        adapter.addFragment(new PhotoFragment());
 
-        //mViewPager = (ViewPager) findViewById(R.id.container);
-        //mViewPager.setAdapter(adapter);
-        //TabLayout tabLayout = (TabLayout) findViewById(R.id.tabsBottom);
-        //tabLayout.getTabAt(0).setText(getString(R.string.gallery));
-        //tabLayout.getTabAt(1).setText(getString(R.string.photo));
+        ViewPager viewPager = findViewById(R.id.container);
+        viewPager.setAdapter(adapter);
+
+        TabLayout tabLayout = findViewById(R.id.tabsBottom);
+        tabLayout.setupWithViewPager(viewPager);
+        Objects.requireNonNull(tabLayout.getTabAt(0)).setText(getString(R.string.gallery));
+        Objects.requireNonNull(tabLayout.getTabAt(1)).setText(getString(R.string.photo));
+
+
+
 
 
     }
 
     private void setupBottonNavigationView(){
         Log.d(TAG, "setopBottomNavigationView");
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavViewBar);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
         //tu była metoda z gita, ktora zastapilem linijka z layout_bottom_navigation.xml "app:labelVisibilityMode="unlabeled">"
         BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationView);
         Menu menu = bottomNavigationView.getMenu();
