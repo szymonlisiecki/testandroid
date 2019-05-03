@@ -33,7 +33,9 @@ dependencies {
     //firebase
     implementation 'com.google.firebase:firebase-core:16.0.1'
     implementation 'com.google.firebase:firebase-auth:16.0.1'
-   // implementation 'com.google.android.gms:play-services-gcm:9.2.1'
+
+    //wojtka
+    implementation 'com.google.android.gms:play-services:12.0.1'
 
 }
 

@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">My Application</string>
+
+
+    <!-- strings -->
+    <string name="gallery"> GALLERY</string>
+    <string name="photo"> PHOTO</string>
+    <string name="string_open_camera"> OPEN CAMERA</string>
+
 </resources>

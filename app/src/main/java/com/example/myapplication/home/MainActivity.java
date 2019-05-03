@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_camera);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_image2vector1);
-        tabLayout.getTabAt(2).setIcon(R.drawable.ic_arrow);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_map);
 
     }
 
