@@ -7,10 +7,10 @@ import android.support.design.widget.BottomNavigationView;
 import android.view.MenuItem;
 
 import com.example.myapplication.Likes.LikesActivity;
+import com.example.myapplication.Map.MapsActivity;
 import com.example.myapplication.home.MainActivity;
 import com.example.myapplication.Profile.ProfileActivity;
 import com.example.myapplication.R;
-import com.example.myapplication.Search.SearchActivity;
 import com.example.myapplication.Share.ShareActivity;
 
 public class BottomNavigationViewHelper {
@@ -34,25 +34,26 @@ public class BottomNavigationViewHelper {
                         context.startActivity(intent1);
                         break;
 
-                    case R.id.ic_search:
-                        Intent intent2 = new Intent(context, SearchActivity.class);//ACTIVITY_NUM 1
+                    case R.id.ic_circle:
+                        Intent intent2 = new Intent(context, ShareActivity.class);//ACTIVITY_NUM 1
                         context.startActivity(intent2);
                         break;
 
-                    case R.id.ic_circle:
-                        Intent intent3 = new Intent(context, ShareActivity.class);//ACTIVITY_NUM 2
+                    case R.id.ic_alert:
+                        Intent intent3 = new Intent(context, LikesActivity.class);//ACTIVITY_NUM 2
                         context.startActivity(intent3);
                         break;
 
-                    case R.id.ic_alert:
-                        Intent intent4 = new Intent(context, LikesActivity.class);//ACTIVITY_NUM 3
+                    case R.id.ic_android:
+                        Intent intent4 = new Intent(context, ProfileActivity.class);//ACTIVITY_NUM 3
                         context.startActivity(intent4);
                         break;
-
-                    case R.id.ic_android:
-                        Intent intent5 = new Intent(context, ProfileActivity.class);//ACTIVITY_NUM 4
+                    case R.id.ic_map:
+                        Intent intent5 = new Intent(context, MapsActivity.class);//ACTIVITY_NUM 4
                         context.startActivity(intent5);
                         break;
+
+
                 }
 
                 return false;

@@ -14,7 +14,7 @@ import com.example.myapplication.Utils.BottomNavigationViewHelper;
 
 public class ProfileActivity extends AppCompatActivity {
     private static final String TAG = "ProfileActivity";
-    private static final int ACTIVITY_NUM = 4;
+    private static final int ACTIVITY_NUM = 3;
     private Context mContext = ProfileActivity.this;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

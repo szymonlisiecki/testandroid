@@ -1,5 +1,6 @@
 package com.example.myapplication.Login;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -20,45 +21,47 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private Button buttonSignIn;
+    private Button registerButton;
+    private ProgressBar registerProgressBar;
+
     private EditText editTextEmail;
     private EditText editTextPassword;
-    private TextView textViewSignup;
-
-    private ProgressBar loginProgressBar;
+    private TextView textViewSignin;
 
     //firebase auth object
     private FirebaseAuth firebaseAuth;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-    /*    if(firebaseAuth.getCurrentUser() != null){
+      /*  if(firebaseAuth.getCurrentUser() != null){
             //jezeli user jest juz zalogowany
             finish();
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
         }*/
+        registerButton = findViewById(R.id.buttonLogout);
+        registerProgressBar = findViewById(R.id.register_progressBar);
+        registerProgressBar.setVisibility(View.INVISIBLE);
 
+        editTextEmail = (EditText) findViewById(R.id.register_mail);
+        editTextPassword = (EditText) findViewById(R.id.register_password);
+        textViewSignin = (TextView)  findViewById(R.id.register_textViewSignin);
 
+        registerButton.setOnClickListener(this);
+        textViewSignin.setOnClickListener(this);
 
-        editTextEmail = (EditText) findViewById(R.id.login_mail);
-        editTextPassword = (EditText) findViewById(R.id.login_password);
-        buttonSignIn = (Button) findViewById(R.id.login_button);
-        textViewSignup = (TextView) findViewById(R.id.login_textViewSignin);
-
-        buttonSignIn.setOnClickListener(this);
-        textViewSignup.setOnClickListener(this);
 
     }
 
-    private void userLogin(){
+    private void registerUser(){
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
@@ -74,36 +77,36 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
 
-        buttonSignIn.setOnClickListener(new View.OnClickListener() {
+        registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginProgressBar.setVisibility(View.VISIBLE);
-                buttonSignIn.setVisibility(View.INVISIBLE);
+                registerProgressBar.setVisibility(View.VISIBLE);
+                registerButton.setVisibility(View.INVISIBLE);
             }
         });
 
-        firebaseAuth.signInWithEmailAndPassword(email, password)
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            //start the profile activity
                             finish();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        }else{
+                            Toast.makeText(RegisterActivity.this, "Nie mozna zarejestrowac", Toast.LENGTH_SHORT).show();
                         }
-
                     }
                 });
     }
 
     @Override
     public void onClick(View view){
-        if(view == buttonSignIn){
-            userLogin();
+        if(view == registerButton){
+            registerUser();
         }
 
-        if(view == textViewSignup){
-            startActivity(new Intent(this, RegisterActivity.class));
+        if (view == textViewSignin){
+            startActivity(new Intent(this, LoginActivity.class));
         }
     }
 }

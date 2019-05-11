@@ -20,7 +20,7 @@ import java.util.Objects;
 
 public class ShareActivity extends AppCompatActivity {
     private static final String TAG = "ShareActivity";
-    private static final int ACTIVITY_NUM = 2;
+    private static final int ACTIVITY_NUM = 1;
     private ViewPager mViewPager;
     private Context mContext = ShareActivity.this;
     @Override
