@@ -10,11 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TableLayout;
 
 import com.example.myapplication.R;
 import com.example.myapplication.Utils.BottomNavigationViewHelper;
-import com.example.myapplication.home.SectionsPagerAdapter;
+import com.example.myapplication.Utils.SectionsPagerAdapter;
 
 import java.util.Objects;
 
