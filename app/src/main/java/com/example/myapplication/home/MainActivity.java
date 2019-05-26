@@ -15,6 +15,9 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.Utils.BottomNavigationViewHelper;
 import com.example.myapplication.Utils.SectionsPagerAdapter;
+import com.example.myapplication.Utils.UniversalImageLoader;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 
 //public class MainActivity extends AppCompatActivity implements View.OnClickListener <---- DO LOGOUTU
@@ -31,11 +34,19 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate: starting");
+
+        initImageLoader();
         setupBottonNavigationView();
         Toast.makeText(this, "MainActivity", Toast.LENGTH_SHORT).show();
         setupViewPager();
 
     }
+
+    private void initImageLoader(){
+        UniversalImageLoader universalImageLoader = new UniversalImageLoader(mContext);
+        ImageLoader.getInstance().init(universalImageLoader.getConfig());
+    }
+
     private void setupViewPager()
     {
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
