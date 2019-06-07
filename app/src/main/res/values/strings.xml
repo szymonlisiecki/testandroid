@@ -26,6 +26,7 @@
     <string name="field_description">description</string>
     <string name="field_phone_number">phone_number</string>
     <string name="auth_failed">auth_failed</string>
+    <string name="auth_success">auth_success</string>
 
 
     <string name="new_photo">new_photo</string>

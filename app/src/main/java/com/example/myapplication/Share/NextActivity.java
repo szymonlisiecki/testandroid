@@ -38,7 +38,7 @@ public class NextActivity extends AppCompatActivity {
 
     //vars
     private String mAppend = "file:/";
-    private int imageCount = 0;
+    private int imageCount;
     private String imgUrl;
 
     @Override
