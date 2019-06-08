@@ -29,6 +29,9 @@
     <string name="auth_success">auth_success</string>
 
 
+    <string name="profile_fragment">Profile</string>
+
+
     <string name="new_photo">new_photo</string>
     <string name="profile_photo">profile_photo</string>
 </resources>
