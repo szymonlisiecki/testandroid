@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
-    tools:context=".Login.LoginActivity">
+    android:background="#ffffff">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/login_activity_toolbar"
@@ -60,16 +59,15 @@
         android:id="@+id/btn_login"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="84dp"
         android:layout_marginBottom="84dp"
         android:background="@drawable/button_login_style"
         android:text="Zaloguj"
         android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_email" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -105,9 +103,10 @@
         android:text="Nie masz konta? Zarejestruj się"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBar"
-        app:layout_constraintVertical_bias="0.04" />
+        app:layout_constraintVertical_bias="0.571" />
 
     <TextView
         android:id="@+id/pleaseWait"

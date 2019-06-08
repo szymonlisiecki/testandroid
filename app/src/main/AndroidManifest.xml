@@ -34,15 +34,14 @@
             android:value="@string/google_maps_key" />
 
 
-        <activity android:name=".Login.LoginActivity">
+
+        <activity android:name=".home.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login.RegisterActivity" />
-        <activity android:name=".home.MainActivity"></activity>
         <activity android:name=".Profile.ProfileActivity" />
         <activity android:name=".Likes.LikesActivity" />
         <activity android:name=".Share.ShareActivity" />
@@ -52,6 +51,10 @@
             android:label="@string/title_activity_maps">
         </activity>
         <activity android:name=".Profile.AccountSettingsActivity" />
+        <activity android:name=".Login.LoginActivity">
+
+        </activity>
+        <activity android:name=".Login.RegisterActivity" />
     </application>
 
 </manifest>

@@ -3,18 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Login.RegisterActivity">
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/register_activity_toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#ffffff"
-        app:layout_constraintBottom_toBottomOf="@+id/textView"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+
         app:title="Ekran rejestracji"
         tools:ignore="MissingConstraints"></android.support.v7.widget.Toolbar>
 
@@ -102,7 +101,7 @@
         app:srcCompat="@drawable/logo" />
 
     <ProgressBar
-        android:id="@+id/register_progressBar"
+        android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -113,7 +112,7 @@
         app:layout_constraintTop_toTopOf="@+id/buttonLogout" />
 
     <TextView
-        android:id="@+id/register_textViewSignin"
+        android:id="@+id/link_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -124,7 +123,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_progressBar"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar"
         app:layout_constraintVertical_bias="0.04" />
 
     <TextView

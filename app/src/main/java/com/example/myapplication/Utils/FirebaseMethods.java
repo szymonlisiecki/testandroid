@@ -231,24 +231,24 @@ public class FirebaseMethods {
 
     }
 
-//    public boolean checkIfUsernameExists(String username, DataSnapshot datasnapshot){
-//        Log.d(TAG, "checkIfUsernameExists: checking if " + username + " already exists.");
-//
-//        User user = new User();
-//
-//        for (DataSnapshot ds: datasnapshot.child(userID).getChildren()){
-//            Log.d(TAG, "checkIfUsernameExists: datasnapshot: " + ds);
-//
-//            user.setUsername(ds.getValue(User.class).getUsername());
-//            Log.d(TAG, "checkIfUsernameExists: username: " + user.getUsername());
-//
-//            if(StringManipulation.expandUsername(user.getUsername()).equals(username)){
-//                Log.d(TAG, "checkIfUsernameExists: FOUND A MATCH: " + user.getUsername());
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+    public boolean checkIfUsernameExists(String username, DataSnapshot datasnapshot){
+        Log.d(TAG, "checkIfUsernameExists: checking if " + username + " already exists.");
+
+        User user = new User();
+
+        for (DataSnapshot ds: datasnapshot.child(userID).getChildren()){
+            Log.d(TAG, "checkIfUsernameExists: datasnapshot: " + ds);
+
+            user.setUsername(ds.getValue(User.class).getUsername());
+            Log.d(TAG, "checkIfUsernameExists: username: " + user.getUsername());
+
+            if(StringManipulation.expandUsername(user.getUsername()).equals(username)){
+                Log.d(TAG, "checkIfUsernameExists: FOUND A MATCH: " + user.getUsername());
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Register a new email and password to Firebase Authentication

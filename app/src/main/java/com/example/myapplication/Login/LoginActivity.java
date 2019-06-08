@@ -23,9 +23,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-/**
- * Created by User on 6/19/2017.
- */
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -119,6 +116,17 @@ public class LoginActivity extends AppCompatActivity {
                                     }
 
                                     // ...
+                                             /*
+         If the user is logged in then navigate to HomeActivity and call 'finish()'
+          */
+                                    Log.d(TAG, "139 linijka essa"+ mAuth.getCurrentUser());
+                                    if(mAuth.getCurrentUser() != null){
+                                        Log.d(TAG, "mAuth RÓŻNE OD NULLA, 140 linijka jestem");
+                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                        Log.d(TAG, "mAuth RÓŻNE OD NULLA, 142 linijka jestem");
+                                        startActivity(intent);
+                                        finish();
+                                    }
                                 }
                             });
                 }
@@ -139,11 +147,7 @@ public class LoginActivity extends AppCompatActivity {
          /*
          If the user is logged in then navigate to HomeActivity and call 'finish()'
           */
-        if(mAuth.getCurrentUser() != null){
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
+
     }
 
     /**
