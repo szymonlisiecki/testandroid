@@ -1,5 +1,6 @@
 package com.example.myapplication.Profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.Share.ShareActivity;
 import com.example.myapplication.models.User;
 import com.example.myapplication.R;
 import com.example.myapplication.Utils.FirebaseMethods;
@@ -222,8 +224,18 @@ public class EditProfileFragment extends Fragment {
         mEmail.setText(userSettings.getUser().getEmail());
         mPhoneNumber.setText(String.valueOf(userSettings.getUser().getPhone_number()));
 
-
+        mChangeProfilePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: changing profile photo");
+                Intent intent = new Intent(getActivity(), ShareActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //268435456
+                getActivity().startActivity(intent);
+            }
+        });
     }
+
+
        /*
     ------------------------------------ Firebase ---------------------------------------------
      */

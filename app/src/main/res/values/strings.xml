@@ -12,7 +12,7 @@
     <string name="edit_profile_fragment">Edit Profile</string>
     <string name="sign_out_fragment">Sign Out</string>
 
-    <string name="selected_image">selected_image</string>
+
 
     <!-- Firebase database fields -->
     <string name="dbname_users">users</string>
@@ -28,7 +28,10 @@
     <string name="auth_failed">auth_failed</string>
     <string name="auth_success">auth_success</string>
 
+    <!-- Intent Extras -->
     <string name="calling_activity">calling_activity</string>
+    <string name="return_to_fragment">return_to_fragment</string>
+    <string name="selected_image">selected_image</string>
 
     <!-- activity names -->
     <string name="profile_activity">Profile Activity</string>
