@@ -138,10 +138,10 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             //1st check: Make sure the username is not already in use
-                            if(firebaseMethods.checkIfUsernameExists(username, dataSnapshot)){
-                                append = myRef.push().getKey().substring(3,10);
-                                Log.d(TAG, "onDataChange: username already exists. Appending random string to name: " + append);
-                            }
+//                            if(firebaseMethods.checkIfUsernameExists(username, dataSnapshot)){
+//                                append = myRef.push().getKey().substring(3,10);
+//                                Log.d(TAG, "onDataChange: username already exists. Appending random string to name: " + append);
+//                            }
                             username = username + append;
 
                             firebaseMethods.addNewUser(email, username, "", "", "");
@@ -154,7 +154,9 @@ public class RegisterActivity extends AppCompatActivity {
 
                         }
                     });
+                    finish();
                 } else {
+
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }

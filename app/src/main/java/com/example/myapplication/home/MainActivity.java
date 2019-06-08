@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity  {
         Toast.makeText(this, "MainActivity", Toast.LENGTH_SHORT).show();
         setupViewPager();
 
-
     }
 
     private void initImageLoader(){
