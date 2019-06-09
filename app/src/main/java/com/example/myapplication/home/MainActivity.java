@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity  {
         Log.d(TAG, "onCreate: starting");
 
         setupFirebaseAuth();
-
+        //mAuth.signOut();
         initImageLoader();
         setupBottonNavigationView();
         Toast.makeText(this, "MainActivity", Toast.LENGTH_SHORT).show();

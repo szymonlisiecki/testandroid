@@ -8,8 +8,8 @@ public class Photo {
     private String photo_id;
     private String user_id;
     private String tags;
-    private double latitude;
-    private double longitude;
+    private float latitude;
+    private float longitude;
 
 
 
@@ -17,7 +17,7 @@ public class Photo {
 
     }
 
-    public Photo(String caption, String date_created, String image_path, String photo_id, String user_id, String tags, double longitude, double latitude) {
+    public Photo(String caption, String date_created, String image_path, String photo_id, String user_id, String tags, float longitude, float latitude) {
         this.caption = caption;
         this.date_created = date_created;
         this.image_path = image_path;
@@ -76,13 +76,13 @@ public class Photo {
         this.tags = tags;
     }
 
-    public double getLatitude(){ return latitude; }
-    public void setLatitude(double l) {
+    public float getLatitude(){ return latitude; }
+    public void setLatitude(float l) {
         this.latitude = l;
     }
 
-    public double getLongitude(){ return longitude; }
-    public void setLongitude(double l) {
+    public float getLongitude(){ return longitude; }
+    public void setLongitude(float l) {
         this.longitude = l;
     }
 

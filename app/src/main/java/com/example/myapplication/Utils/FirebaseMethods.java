@@ -1,7 +1,6 @@
 package com.example.myapplication.Utils;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.ExifInterface;
 import android.net.Uri;
@@ -10,7 +9,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
-import com.example.myapplication.home.MainActivity;
 import com.example.myapplication.models.Photo;
 import com.example.myapplication.models.User;
 import com.example.myapplication.models.UserAccountSettings;
@@ -21,7 +19,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -30,6 +27,7 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -64,6 +62,7 @@ public class FirebaseMethods {
         Log.d(TAG, "uploadNewPhoto: attempting to uplaod new photo.");
 
         final FilePaths filePaths = new FilePaths();
+
         //case1) new photo
         if(photoType.equals(mContext.getString(R.string.new_photo))){
             Log.d(TAG, "uploadNewPhoto: uploading NEW photo.");
@@ -74,6 +73,7 @@ public class FirebaseMethods {
             //convert image url to bitmap
             Bitmap bm = ImageManager.getBitmap(imgUrl);
             byte[] bytes = ImageManager.getBytesFromBitmap(bm, 100);
+           // ByteArrayInputStream bs = new ByteArrayInputStream(bytes);
 
             UploadTask uploadTask = null;
             uploadTask = storageReference.putBytes(bytes);
@@ -84,6 +84,9 @@ public class FirebaseMethods {
                     mStorageReference.child(filePaths.FIREBASE_IMAGE_STORAGE + "/" + user_id + "/photo" + (count + 1)).getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                         @Override
                         public void onComplete(@NonNull Task<Uri> task) {
+
+
+
                             addPhotoToDatabase(caption,task.getResult().toString());
                         }
                     });
@@ -155,8 +158,9 @@ public class FirebaseMethods {
 //        ExifInterface exifInterface = new ExifInterface(file);
 //        exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
         //dodanie do firebase informacji o latitude i longitude
-        photo.setLatitude(32);
-        photo.setLongitude(22.22);
+        Log.d("ADebugTag", "Value: " + Float.toString(ReadExif(url)[0]));
+        photo.setLatitude(ReadExif(photo.getImage_path())[0]);
+        photo.setLongitude(ReadExif(photo.getImage_path())[1]);
 
         //insert into database
         myRef.child(mContext.getString(R.string.dbname_user_photos))
@@ -422,6 +426,25 @@ public class FirebaseMethods {
         return new UserSettings(user, settings);
 
     }
+    public float[] ReadExif(String file){
 
+        float[] latLong = new float[2];
+
+        try {
+            ExifInterface exifInterface = new ExifInterface(file);
+
+            exifInterface.getLatLong(latLong);
+
+
+        }
+        catch (IOException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+            // Toast.makeText(AndroidExifActivity.this,
+            //e.toString(),
+            //Toast.LENGTH_LONG).show();
+        }
+        return latLong;
+    }
 }
 
