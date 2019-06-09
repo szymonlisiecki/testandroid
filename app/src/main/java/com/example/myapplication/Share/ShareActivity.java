@@ -51,6 +51,13 @@ public class ShareActivity extends AppCompatActivity {
                 VERIFY_PERMISSIONS_REQUEST
         );
     }
+
+    public int getTask(){
+        Log.d(TAG, "getTask: TASK: " + getIntent().getFlags());
+        return getIntent().getFlags();
+    }
+
+
     public boolean checkPermissionsArray(String[] permissions){
         Log.d(TAG, "checkPermissionsArray: checking permissions array.");
 
