@@ -54,6 +54,9 @@ public class FirebaseMethods {
         myRef = mFirebaseDatabase.getReference();
         mContext = context;
 
+        String latitude;
+        String longitude;
+
         if(mAuth.getCurrentUser() != null){
             userID = mAuth.getCurrentUser().getUid();
         }
@@ -94,8 +97,12 @@ public class FirebaseMethods {
 //                            Log.d(TAG, "zajebisty link" +  qwer);
 //
                        //     Log.d(TAG, "w on complete" +  ReadExif(qwer)[0]);
+                            float tmp = Float.parseFloat(Float.toString(ReadExif(imgUrl)[0]));
+                            float tmp2 = Float.parseFloat(Float.toString(ReadExif(imgUrl)[1]));
 
-                            addPhotoToDatabase(caption,task.getResult().toString(), imgUrl);
+                       //     Log.d(TAG, "obsrane gowno" +  Float.toString(ReadExif(imgUrl)[0]));
+
+                            addPhotoToDatabase(caption,task.getResult().toString(), tmp, tmp2);
                         }
                     });
                     Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
@@ -150,7 +157,7 @@ public class FirebaseMethods {
         return sdf.format(new Date());
     }
 
-    private void addPhotoToDatabase(String caption, String url, String path){
+    private void addPhotoToDatabase(String caption, String url, float qwe, float qwer){
         Log.d(TAG, "addPhotoToDatabase: adding photo to database.");
 
         Log.d(TAG, "to jest url, szmato jebana: " + url);
@@ -164,15 +171,19 @@ public class FirebaseMethods {
         photo.setTags(tags);
         photo.setUser_id(FirebaseAuth.getInstance().getCurrentUser().getUid());
         photo.setPhoto_id(newPhotoKey);
-        photo.setLatitude(ReadExif(path)[0]);
-        photo.setLongitude(ReadExif(path)[1]);
+      //  photo.setLatitude(Float.parseFloat(qwe));
+       // photo.setLongitude(Float.parseFloat(qwer));
+        Log.d("ADebugTag", "long i lat, w addPhotooDatabase jeden " + qwe + "dupa" + qwer);
+
+        photo.setLatitude(qwe);
+        photo.setLongitude(qwer);
 
 //        ExifInterface exifInterface = new ExifInterface(file);
 //        exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
         //dodanie do firebase informacji o latitude i longitude
         Log.d("ADebugTag", "Value: " + Float.toString(ReadExif(url)[0]));
-        photo.setLatitude(ReadExif(photo.getImage_path())[0]);
-        photo.setLongitude(ReadExif(photo.getImage_path())[1]);
+  //      photo.setLatitude(ReadExif(photo.getImage_path())[0]);
+  //      photo.setLongitude(ReadExif(photo.getImage_path())[1]);
 
         Log.d("ADebugTag", "photo . get image path: " + photo.getImage_path());
 
