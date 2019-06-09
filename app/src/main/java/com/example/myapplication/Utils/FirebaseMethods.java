@@ -61,6 +61,9 @@ public class FirebaseMethods {
     public void uploadNewPhoto(String photoType, final String caption,final int count, final String imgUrl){
         Log.d(TAG, "uploadNewPhoto: attempting to uplaod new photo.");
 
+        Log.d("ADebugTag", "zajebista opcja 123123123: " + Float.toString(ReadExif(imgUrl)[0]));
+
+
         final FilePaths filePaths = new FilePaths();
 
         //case1) new photo
@@ -81,13 +84,18 @@ public class FirebaseMethods {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     //Uri firebaseUrl = taskSnapshot.getDownloadUr();
+
+
                     mStorageReference.child(filePaths.FIREBASE_IMAGE_STORAGE + "/" + user_id + "/photo" + (count + 1)).getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                         @Override
                         public void onComplete(@NonNull Task<Uri> task) {
 
+//                            final String qwer = filePaths.FIREBASE_IMAGE_STORAGE + "/" + user_id + "/photo" + (count + 15);
+//                            Log.d(TAG, "zajebisty link" +  qwer);
+//
+                       //     Log.d(TAG, "w on complete" +  ReadExif(qwer)[0]);
 
-
-                            addPhotoToDatabase(caption,task.getResult().toString());
+                            addPhotoToDatabase(caption,task.getResult().toString(), imgUrl);
                         }
                     });
                     Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
@@ -142,8 +150,10 @@ public class FirebaseMethods {
         return sdf.format(new Date());
     }
 
-    private void addPhotoToDatabase(String caption, String url){
+    private void addPhotoToDatabase(String caption, String url, String path){
         Log.d(TAG, "addPhotoToDatabase: adding photo to database.");
+
+        Log.d(TAG, "to jest url, szmato jebana: " + url);
 
         String tags = StringManipulation.getTags(caption);
         String newPhotoKey = myRef.child(mContext.getString(R.string.dbname_photos)).push().getKey();
@@ -154,6 +164,8 @@ public class FirebaseMethods {
         photo.setTags(tags);
         photo.setUser_id(FirebaseAuth.getInstance().getCurrentUser().getUid());
         photo.setPhoto_id(newPhotoKey);
+        photo.setLatitude(ReadExif(path)[0]);
+        photo.setLongitude(ReadExif(path)[1]);
 
 //        ExifInterface exifInterface = new ExifInterface(file);
 //        exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
@@ -161,6 +173,9 @@ public class FirebaseMethods {
         Log.d("ADebugTag", "Value: " + Float.toString(ReadExif(url)[0]));
         photo.setLatitude(ReadExif(photo.getImage_path())[0]);
         photo.setLongitude(ReadExif(photo.getImage_path())[1]);
+
+        Log.d("ADebugTag", "photo . get image path: " + photo.getImage_path());
+
 
         //insert into database
         myRef.child(mContext.getString(R.string.dbname_user_photos))
@@ -427,22 +442,27 @@ public class FirebaseMethods {
 
     }
     public float[] ReadExif(String file){
+        Log.d(TAG, "file readexif " + file);
 
         float[] latLong = new float[2];
-
+        Log.d(TAG, "Jebac je macie");
         try {
+
             ExifInterface exifInterface = new ExifInterface(file);
 
             exifInterface.getLatLong(latLong);
+            Log.d(TAG, "Jebac stare baby " + latLong[0]);
 
 
         }
-        catch (IOException e) {
+        catch (Exception e) {
+            Log.d(TAG, "wchodze do catch a szmato " + latLong[0]);
             // TODO Auto-generated catch block
             //e.printStackTrace();
             // Toast.makeText(AndroidExifActivity.this,
             //e.toString(),
             //Toast.LENGTH_LONG).show();
+
         }
         return latLong;
     }

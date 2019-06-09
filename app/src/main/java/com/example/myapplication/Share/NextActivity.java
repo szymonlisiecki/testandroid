@@ -23,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import com.example.myapplication.models.Photo;
+
 public class NextActivity extends AppCompatActivity {
 
     private static final String TAG = "NextActivity";
@@ -35,6 +37,8 @@ public class NextActivity extends AppCompatActivity {
     private FirebaseMethods mFirebaseMethods;
 
     private EditText mCaption;
+
+    Photo qwer;
 
     //vars
     private String mAppend = "file:/";
@@ -81,6 +85,14 @@ public class NextActivity extends AppCompatActivity {
         Intent intent = getIntent();
         ImageView image = (ImageView) findViewById(R.id.imageShare);
         imgUrl = intent.getStringExtra(getString(R.string.selected_image));
+
+
+//        Log.d("ADebugTag", "Value: " + Float.toString(ReadExif(imgUrl)[0]));
+//
+//        qwer.setLatitude(23.23f);
+//        setLongitude(23.32);
+
+
         UniversalImageLoader.setImage(imgUrl, image, null, mAppend);    }
 
      /*
