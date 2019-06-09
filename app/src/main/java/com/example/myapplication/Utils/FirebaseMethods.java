@@ -3,6 +3,7 @@ package com.example.myapplication.Utils;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -151,6 +152,12 @@ public class FirebaseMethods {
         photo.setUser_id(FirebaseAuth.getInstance().getCurrentUser().getUid());
         photo.setPhoto_id(newPhotoKey);
 
+//        ExifInterface exifInterface = new ExifInterface(file);
+//        exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
+        //dodanie do firebase informacji o latitude i longitude
+        photo.setLatitude(32);
+        photo.setLongitude(22.22);
+
         //insert into database
         myRef.child(mContext.getString(R.string.dbname_user_photos))
                 .child(FirebaseAuth.getInstance().getCurrentUser()
@@ -242,24 +249,7 @@ public class FirebaseMethods {
 
     }
 
-//    public boolean checkIfUsernameExists(String username, DataSnapshot datasnapshot){
-//        Log.d(TAG, "checkIfUsernameExists: checking if " + username + " already exists.");
-//
-//        User user = new User();
-//
-//        for (DataSnapshot ds: datasnapshot.child(userID).getChildren()){
-//            Log.d(TAG, "checkIfUsernameExists: datasnapshot: " + ds);
-//
-//            user.setUsername(ds.getValue(User.class).getUsername());
-//            Log.d(TAG, "checkIfUsernameExists: username: " + user.getUsername());
-//
-//            if(StringManipulation.expandUsername(user.getUsername()).equals(username)){
-//                Log.d(TAG, "checkIfUsernameExists: FOUND A MATCH: " + user.getUsername());
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+
 
     /**
      * Register a new email and password to Firebase Authentication
@@ -294,23 +284,6 @@ public class FirebaseMethods {
                 });
     }
 
-//    public void sendVerificationEmail(){
-//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//
-//        if(user != null){
-//            user.sendEmailVerification()
-//                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<Void> task) {
-//                            if(task.isSuccessful()){
-//
-//                            }else{
-//                                Toast.makeText(mContext, "couldn't send verification email.", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    });
-//        }
-//    }
 
     /**
      * Add information to the users nodes

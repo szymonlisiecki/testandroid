@@ -8,19 +8,24 @@ public class Photo {
     private String photo_id;
     private String user_id;
     private String tags;
+    private double latitude;
+    private double longitude;
+
 
 
     public Photo() {
 
     }
 
-    public Photo(String caption, String date_created, String image_path, String photo_id, String user_id, String tags) {
+    public Photo(String caption, String date_created, String image_path, String photo_id, String user_id, String tags, double longitude, double latitude) {
         this.caption = caption;
         this.date_created = date_created;
         this.image_path = image_path;
         this.photo_id = photo_id;
         this.user_id = user_id;
         this.tags = tags;
+        this.longitude=longitude;
+        this.latitude=latitude;
     }
 
     public String getCaption() {
@@ -71,6 +76,18 @@ public class Photo {
         this.tags = tags;
     }
 
+    public double getLatitude(){ return latitude; }
+    public void setLatitude(double l) {
+        this.latitude = l;
+    }
+
+    public double getLongitude(){ return longitude; }
+    public void setLongitude(double l) {
+        this.longitude = l;
+    }
+
+
+    //zmienic tutaj jeszcze setLongitude i Latitude
     @Override
     public String toString() {
         return "Photo{" +
