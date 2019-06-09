@@ -2,6 +2,8 @@ package com.example.myapplication.Map;
 
 import android.Manifest;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -25,6 +27,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -37,8 +40,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -71,8 +79,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
+       // setupGridView();
 
-        setupGridView();
     }
 
 
@@ -95,10 +103,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
              //   ArrayList<Float> imgLongitudeCords = new ArrayList<Float>();
               //  ArrayList<Float> imgLatitudeCords = new ArrayList<Float>();
                 for(int i = 0; i < photos.size(); i++){
-                    imgUrls.add(photos.get(i).getImage_path());
+                 //   imgUrls.add(photos.get(i).getImage_path());
                     imgLati.add(photos.get(i).getLatitude());
                     imgLong.add(photos.get(i).getLongitude());
+
+
+                    Log.d(TAG, "pierwszy for " + photos.get(i));
+                    Log.d(TAG, "chujstwo  drugi log " + photos.get(i).getLatitude());
                 }
+                Log.d(TAG, "imgLong.size setupgrid:  " +imgLong.size());
 
             }
 
@@ -110,6 +123,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
     }
+
 
     /**
      * Manipulates the map once available.
@@ -128,21 +142,70 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
 
-        String pin = "pin";
 
-        //   ArrayList<Float> imgLongitudeCords = new ArrayList<Float>();
-        //  ArrayList<Float> imgLatitudeCords = new ArrayList<Float>();
+        final ArrayList<Photo> photos = new ArrayList<>();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query query = reference.child(mContext.getString(R.string.dbname_photos));
 
-        ArrayList<LatLng> Pins = new ArrayList<LatLng>();
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for ( DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
+                    photos.add(singleSnapshot.getValue(Photo.class));
+                }
 
-        for(int i = 0 ; i < imgLong.size() ; i++) {
 
-            pin = pin + String.valueOf(i);
+                for(int i = 0; i < photos.size(); i++){
 
-      //      LatLng sydney = new LatLng(53.446980, 14.492280);
-            Pins.add(new LatLng(imgLati.get(i), imgLong.get(i)));
-            mMap.addMarker(new MarkerOptions().position(Pins.get(i)).title(pin));
-        }
+                    imgLati.add(photos.get(i).getLatitude());
+                    imgLong.add(photos.get(i).getLongitude());
+
+                    LatLng marker = new LatLng(imgLati.get(i), imgLong.get(i));
+
+
+                    //Bitmap bmp = BitmapFactory.decodeStream(photos.get(i).getImage_path().openConnection().getInputStream());
+
+
+                    mMap.addMarker(new MarkerOptions()
+                            .position(marker)
+                            .title(photos.get(i).getCaption())
+                           // .icon(R.drawable.ic_android)
+                    );
+
+                }
+                Log.d(TAG, "gowno pier " +imgLong.size());
+
+            }
+
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: query cancelled.");
+            }
+        });
+
+
+
+
+
+//        String pin = "pin";
+//
+//
+//
+//        ArrayList<LatLng> Pins = new ArrayList<LatLng>();
+//
+//        Log.d(TAG, "imgLong.size(), onMapReady " + imgLong.size());
+//
+//        for(int i = 0 ; i < imgLong.size() ; i++) {
+//            Log.d(TAG, "dupa blada ");
+//            pin = pin + String.valueOf(i);
+//
+//            Pins.add(new LatLng(imgLati.get(i), imgLong.get(i)));
+//            mMap.addMarker(new MarkerOptions().position(Pins.get(i)).title(pin));
+//
+//    }
+
 
 
 
