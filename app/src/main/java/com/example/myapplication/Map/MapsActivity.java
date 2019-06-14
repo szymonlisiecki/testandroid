@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -81,7 +82,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     imgLati.add(photos.get(i).getLatitude());
                     imgLong.add(photos.get(i).getLongitude());
 
-
+                    Picasso.get().load("http://i.imgur.com/DvpvklR.png").into(imageView);
                     Log.d(TAG, "pierwszy for " + photos.get(i));
                     Log.d(TAG, "chujstwo  drugi log " + photos.get(i).getLatitude());
                 }
