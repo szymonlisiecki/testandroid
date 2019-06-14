@@ -27,7 +27,6 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -160,7 +159,7 @@ public class FirebaseMethods {
     private void addPhotoToDatabase(String caption, String url, float qwe, float qwer){
         Log.d(TAG, "addPhotoToDatabase: adding photo to database.");
 
-        Log.d(TAG, "to jest url, szmato jebana: " + url);
+        Log.d(TAG, "to jest url, szmato jebana: " + path);
 
         String tags = StringManipulation.getTags(caption);
         String newPhotoKey = myRef.child(mContext.getString(R.string.dbname_photos)).push().getKey();
