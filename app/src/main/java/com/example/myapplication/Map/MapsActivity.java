@@ -154,9 +154,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     photos.add(singleSnapshot.getValue(Photo.class));
                 }
 
-
+//                ArrayList<String> imgUrls = new ArrayList<String>();
+//                for(int i = 0; i < photos.size(); i++){
+//                    imgUrls.add(photos.get(i).getImage_path());
+//                }
+                ArrayList<String> imgUrls = new ArrayList<String>();
                 for(int i = 0; i < photos.size(); i++){
-
+                    Log.d(TAG, "fgdhfgh " +photos.get(i).getImage_path());
                     imgLati.add(photos.get(i).getLatitude());
                     imgLong.add(photos.get(i).getLongitude());
 
@@ -173,7 +177,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     );
 
                 }
-                Log.d(TAG, "gowno pier " +imgLong.size());
+                Log.d(TAG, "fgdhfgh " +imgLong.size());
 
             }
 
