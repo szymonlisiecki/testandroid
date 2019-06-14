@@ -60,6 +60,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Bitmap bmap;
 int i=0;
 
+
+    ArrayList<LatLng> danePozycja = new ArrayList<LatLng>();
+    ArrayList<String> daneTytul = new ArrayList<String>();
+    ArrayList<String> daneLink = new ArrayList<String>();
+
+
     Matrix matrix = new Matrix();
 
 
@@ -117,39 +123,17 @@ int i=0;
                 }
 
                 ArrayList<String> imgUrls = new ArrayList<String>();
-                for(i = 0; i < photos.size()-1; i++){
-                    Log.d(TAG, "fgdhfgh " +photos.get(i).getImage_path());
+                for(i = 0; i < photos.size(); i++){
+                  //  Log.d(TAG, "fgdhfgh " +photos.get(i).getImage_path());
                     imgLati.add(photos.get(i).getLatitude());
                     imgLong.add(photos.get(i).getLongitude());
 
-                    //Log.d(TAG, "picasso: " + Picasso.get().load(photos.get(i).getImage_path()));
-
-
-
 
                     position = new LatLng(imgLati.get(i), imgLong.get(i));
-//                    Picasso.get()
-//                            .load("https://firebasestorage.googleapis.com/v0/b/phototracker-54d8a.appspot.com/o/photos%2Fusers%2FRv5OaYsfbuetjsPBx0eCd51igSo2%2Fphoto31?alt=media&token=5bf86ee0-d199-4080-956e-029e634358c4")
-//                            .resize(50,50)
-//                            .centerCrop()
-//                            .into(imageView);
 
-      //              Picasso.get().load(photos.get(i).getImage_path()).into(target);
-
-
-//                    imageView.buildDrawingCache();
-//                    bmap = imageView.getDrawingCache();
-
-                    //Bitmap bmp = BitmapFactory.decodeStream(photos.get(i).getImage_path().openConnection().getInputStream());
-
-                    //Marker marker = new Marker();
-     //               PicassoMarker picassoMarker = new PicassoMarker(mark);
-//                    Picasso.get()
-//                            .load("https://firebasestorage.googleapis.com/v0/b/phototracker-54d8a.appspot.com/o/photos%2Fusers%2FRv5OaYsfbuetjsPBx0eCd51igSo2%2Fphoto31?alt=media&token=5bf86ee0-d199-4080-956e-029e634358c4")
-//                            .into(picassoMarker);
-
-
-                    Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/phototracker-54d8a.appspot.com/o/photos%2Fusers%2FRv5OaYsfbuetjsPBx0eCd51igSo2%2Fphoto31?alt=media&token=5bf86ee0-d199-4080-956e-029e634358c4").into(new Target() {
+                    //jeżeli w load damy url zdjęcia to pokaże się jedno zdjęcie, poneważ onBitmapLoaded
+                    //wykonuje sie tylko raz, przed tym jak z firebasa pobieramy zdjecia.
+                    Picasso.get().load(photos.get(i).getImage_path()).into(new Target() {
                         @Override
                         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
 
@@ -160,8 +144,6 @@ int i=0;
                             mMap.addMarker(new MarkerOptions()
                                     .position(position)
                                     .title(photos.get(i).getCaption())
-                                    //.icon(BitmapDescriptorFactory.fromBitmap(bmap))
-                                    //.icon(BitmapDescriptorFactory.fromFile(target))
                                     .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
                             );
 
