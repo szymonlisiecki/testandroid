@@ -1,9 +1,16 @@
 package com.example.myapplication.Map;
 
 import android.content.Context;
+
+import android.graphics.Bitmap;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
@@ -13,6 +20,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,16 +31,37 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+import de.hdodenhof.circleimageview.CircleImageView;
+
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback{
 
     private static final String TAG = "MapsActivity";
     private static final int ACTIVITY_NUM = 4;
     private Context mContext = MapsActivity.this;
 
     private GoogleMap mMap;
+
+    ImageView imageView;
+    Target targethehe;
+
+    private Target target = new Target() {
+        @Override
+        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+        }
+
+        @Override
+        public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+        }
+
+        @Override
+        public void onPrepareLoad(Drawable placeHolderDrawable) {
+        }
+    };
 
     //get curret location
     private FusedLocationProviderClient fusedLocationClient;
@@ -82,7 +111,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     imgLati.add(photos.get(i).getLatitude());
                     imgLong.add(photos.get(i).getLongitude());
 
-                    Picasso.get().load("http://i.imgur.com/DvpvklR.png").into(imageView);
+
+
+
                     Log.d(TAG, "pierwszy for " + photos.get(i));
                     Log.d(TAG, "chujstwo  drugi log " + photos.get(i).getLatitude());
                 }
@@ -139,8 +170,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     imgLati.add(photos.get(i).getLatitude());
                     imgLong.add(photos.get(i).getLongitude());
 
-                    LatLng marker = new LatLng(imgLati.get(i), imgLong.get(i));
+                    //Log.d(TAG, "picasso: " + Picasso.get().load(photos.get(i).getImage_path()));
 
+                    LatLng marker = new LatLng(imgLati.get(i), imgLong.get(i));
+                    Picasso.get()
+                            .load("https://firebasestorage.googleapis.com/v0/b/phototracker-54d8a.appspot.com/o/photos%2Fusers%2FRv5OaYsfbuetjsPBx0eCd51igSo2%2Fphoto31?alt=media&token=5bf86ee0-d199-4080-956e-029e634358c4")
+                            .resize(50,50)
+                            .centerCrop()
+                            .into(imageView);
+
+                    Picasso.get().load(photos.get(i).getImage_path()).into(target);
+
+
+                    imageView.buildDrawingCache();
+                    Bitmap bmap = imageView.getDrawingCache();
 
                     //Bitmap bmp = BitmapFactory.decodeStream(photos.get(i).getImage_path().openConnection().getInputStream());
 
@@ -148,8 +191,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     mMap.addMarker(new MarkerOptions()
                             .position(marker)
                             .title(photos.get(i).getCaption())
-                            
-                           // .icon(R.drawable.ic_android)
+                            .icon(BitmapDescriptorFactory.fromBitmap(bmap))
                     );
 
                 }
@@ -165,37 +207,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-
-
-
-
-//        String pin = "pin";
-//
-//
-//
-//        ArrayList<LatLng> Pins = new ArrayList<LatLng>();
-//
-//        Log.d(TAG, "imgLong.size(), onMapReady " + imgLong.size());
-//
-//        for(int i = 0 ; i < imgLong.size() ; i++) {
-//            Log.d(TAG, "dupa blada ");
-//            pin = pin + String.valueOf(i);
-//
-//            Pins.add(new LatLng(imgLati.get(i), imgLong.get(i)));
-//            mMap.addMarker(new MarkerOptions().position(Pins.get(i)).title(pin));
-//
-//    }
-
-
-
-
-        // Add a marker in Sydney and move the camera
-     //   LatLng sydney = new LatLng(53.446980, 14.492280);
-     //   mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-     //   mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 
 
 
+
+    private void someMethod() {
+        Picasso.get(this).load("url").into(target);
+    }
+
+    @Override
+    public void onDestroy() {  // could be in onPause or onStop
+        Picasso.get(this).cancelRequest(target);
+        super.onDestroy();
+    }
 
 }
