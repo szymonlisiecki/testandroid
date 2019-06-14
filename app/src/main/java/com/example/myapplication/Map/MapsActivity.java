@@ -5,6 +5,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -22,6 +25,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -46,22 +50,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
 
     ImageView imageView;
+
     Target targethehe;
 
-    private Target target = new Target() {
-        @Override
-        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-        }
+    Target target;
+    private Drawable mIcon = null;
+    Marker mark;
+    LatLng position;
+    Bitmap bmap;
+int i=0;
 
-        @Override
-        public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+    Matrix matrix = new Matrix();
 
-        }
-
-        @Override
-        public void onPrepareLoad(Drawable placeHolderDrawable) {
-        }
-    };
 
     //get curret location
     private FusedLocationProviderClient fusedLocationClient;
@@ -86,50 +86,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
        // setupGridView();
 
     }
-
-
-    private void setupGridView(){
-        Log.d(TAG, "setupGridView: Setting up image grid.");
-
-        final ArrayList<Photo> photos = new ArrayList<>();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        Query query = reference
-                .child(getString(R.string.dbname_user_photos))
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for ( DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
-                    photos.add(singleSnapshot.getValue(Photo.class));
-                }
-
-                ArrayList<String> imgUrls = new ArrayList<String>();
-             //   ArrayList<Float> imgLongitudeCords = new ArrayList<Float>();
-              //  ArrayList<Float> imgLatitudeCords = new ArrayList<Float>();
-                for(int i = 0; i < photos.size(); i++){
-                 //   imgUrls.add(photos.get(i).getImage_path());
-                    imgLati.add(photos.get(i).getLatitude());
-                    imgLong.add(photos.get(i).getLongitude());
-
-
-
-
-                    Log.d(TAG, "pierwszy for " + photos.get(i));
-                    Log.d(TAG, "chujstwo  drugi log " + photos.get(i).getLatitude());
-                }
-                Log.d(TAG, "imgLong.size setupgrid:  " +imgLong.size());
-
-            }
-
-
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d(TAG, "onCancelled: query cancelled.");
-            }
-        });
-    }
-
 
     /**
      * Manipulates the map once available.
@@ -160,39 +116,68 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     photos.add(singleSnapshot.getValue(Photo.class));
                 }
 
-//                ArrayList<String> imgUrls = new ArrayList<String>();
-//                for(int i = 0; i < photos.size(); i++){
-//                    imgUrls.add(photos.get(i).getImage_path());
-//                }
                 ArrayList<String> imgUrls = new ArrayList<String>();
-                for(int i = 0; i < photos.size(); i++){
+                for(i = 0; i < photos.size()-1; i++){
                     Log.d(TAG, "fgdhfgh " +photos.get(i).getImage_path());
                     imgLati.add(photos.get(i).getLatitude());
                     imgLong.add(photos.get(i).getLongitude());
 
                     //Log.d(TAG, "picasso: " + Picasso.get().load(photos.get(i).getImage_path()));
 
-                    LatLng marker = new LatLng(imgLati.get(i), imgLong.get(i));
-                    Picasso.get()
-                            .load("https://firebasestorage.googleapis.com/v0/b/phototracker-54d8a.appspot.com/o/photos%2Fusers%2FRv5OaYsfbuetjsPBx0eCd51igSo2%2Fphoto31?alt=media&token=5bf86ee0-d199-4080-956e-029e634358c4")
-                            .resize(50,50)
-                            .centerCrop()
-                            .into(imageView);
-
-                    Picasso.get().load(photos.get(i).getImage_path()).into(target);
 
 
-                    imageView.buildDrawingCache();
-                    Bitmap bmap = imageView.getDrawingCache();
+
+                    position = new LatLng(imgLati.get(i), imgLong.get(i));
+//                    Picasso.get()
+//                            .load("https://firebasestorage.googleapis.com/v0/b/phototracker-54d8a.appspot.com/o/photos%2Fusers%2FRv5OaYsfbuetjsPBx0eCd51igSo2%2Fphoto31?alt=media&token=5bf86ee0-d199-4080-956e-029e634358c4")
+//                            .resize(50,50)
+//                            .centerCrop()
+//                            .into(imageView);
+
+      //              Picasso.get().load(photos.get(i).getImage_path()).into(target);
+
+
+//                    imageView.buildDrawingCache();
+//                    bmap = imageView.getDrawingCache();
 
                     //Bitmap bmp = BitmapFactory.decodeStream(photos.get(i).getImage_path().openConnection().getInputStream());
 
+                    //Marker marker = new Marker();
+     //               PicassoMarker picassoMarker = new PicassoMarker(mark);
+//                    Picasso.get()
+//                            .load("https://firebasestorage.googleapis.com/v0/b/phototracker-54d8a.appspot.com/o/photos%2Fusers%2FRv5OaYsfbuetjsPBx0eCd51igSo2%2Fphoto31?alt=media&token=5bf86ee0-d199-4080-956e-029e634358c4")
+//                            .into(picassoMarker);
 
-                    mMap.addMarker(new MarkerOptions()
-                            .position(marker)
-                            .title(photos.get(i).getCaption())
-                            .icon(BitmapDescriptorFactory.fromBitmap(bmap))
-                    );
+
+                    Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/phototracker-54d8a.appspot.com/o/photos%2Fusers%2FRv5OaYsfbuetjsPBx0eCd51igSo2%2Fphoto31?alt=media&token=5bf86ee0-d199-4080-956e-029e634358c4").into(new Target() {
+                        @Override
+                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+
+                            bitmap = scaleDown(bitmap, 300, false);
+
+
+                            // loaded bitmap is here (bitmap)
+                            mMap.addMarker(new MarkerOptions()
+                                    .position(position)
+                                    .title(photos.get(i).getCaption())
+                                    //.icon(BitmapDescriptorFactory.fromBitmap(bmap))
+                                    //.icon(BitmapDescriptorFactory.fromFile(target))
+                                    .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
+                            );
+
+
+                        }
+
+                        @Override
+                        public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+                        }
+
+                        @Override
+                        public void onPrepareLoad(Drawable placeHolderDrawable) {}
+                    });
+
+
 
                 }
                 Log.d(TAG, "fgdhfgh " +imgLong.size());
@@ -207,19 +192,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+
+
     }
 
+    public static Bitmap scaleDown(Bitmap realImage, float maxImageSize,
+                                   boolean filter) {
+        float ratio = Math.min(
+                (float) maxImageSize / realImage.getWidth(),
+                (float) maxImageSize / realImage.getHeight());
+        int width = Math.round((float) ratio * realImage.getWidth());
+        int height = Math.round((float) ratio * realImage.getHeight());
 
-
-
-    private void someMethod() {
-        Picasso.get(this).load("url").into(target);
-    }
-
-    @Override
-    public void onDestroy() {  // could be in onPause or onStop
-        Picasso.get(this).cancelRequest(target);
-        super.onDestroy();
+        Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, width,
+                height, filter);
+        return newBitmap;
     }
 
 }
