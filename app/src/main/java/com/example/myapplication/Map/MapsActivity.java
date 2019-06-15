@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.myapplication.Utils.ImageManager;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 
 import android.graphics.BitmapFactory;
@@ -81,7 +82,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Marker mark;
     LatLng position;
     Bitmap bmap;
-int i=0;
+
 
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -147,7 +148,7 @@ int i=0;
                 }
 
                 ArrayList<String> imgUrls = new ArrayList<String>();
-                for(i = 0; i < photos.size(); i++){
+                for(int i = 0; i < photos.size(); i++){
                   //  Log.d(TAG, "fgdhfgh " +photos.get(i).getImage_path());
                     imgLati.add(photos.get(i).getLatitude());
                     imgLong.add(photos.get(i).getLongitude());
@@ -158,12 +159,13 @@ int i=0;
                    //  bmap = getBitmapFromURL(photos.get(i).getImage_path());
                 //    bmap = getBitmapFromURL("https://firebasestorage.googleapis.com/v0/b/phototracker-54d8a.appspot.com/o/photos%2Fusers%2FRv5OaYsfbuetjsPBx0eCd51igSo2%2Fphoto31?alt=media&token=5bf86ee0-d199-4080-956e-029e634358c4");
 
+              //      bmap = ImageManager.getBitmap(photos.get(i).getImage_path());
 
                     // loaded bitmap is here (bitmap)
                     mMap.addMarker(new MarkerOptions()
                             .position(position)
                             .title(photos.get(i).getCaption())
-                            //.icon(BitmapDescriptorFactory.fromBitmap(bmap))
+                           // .icon(BitmapDescriptorFactory.fromBitmap(bmap))
                     );
 
 

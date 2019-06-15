@@ -1,6 +1,7 @@
 package com.example.myapplication.Share;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -39,10 +40,11 @@ public class NextActivity extends AppCompatActivity {
     private EditText mCaption;
 
     Photo qwer;
-
+    private Intent intent;
+    private Bitmap bitmap;
     //vars
     private String mAppend = "file:/";
-    private int imageCount;
+    private int imageCount = 0;
     private String imgUrl;
 
     @Override
@@ -50,9 +52,9 @@ public class NextActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_next);
         mFirebaseMethods = new FirebaseMethods(NextActivity.this);
-        setupFirebaseAuth();
-        mCaption = (EditText) findViewById(R.id.caption) ;
 
+        mCaption = (EditText) findViewById(R.id.caption) ;
+        setupFirebaseAuth();
         ImageView backArrow = (ImageView) findViewById(R.id.ivBackArrow);
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +73,16 @@ public class NextActivity extends AppCompatActivity {
                 //upload the image to firebase
                 Toast.makeText(NextActivity.this, "Attempting to upload new photo", Toast.LENGTH_SHORT).show();
                 String caption = mCaption.getText().toString();
-                mFirebaseMethods.uploadNewPhoto(getString(R.string.new_photo), caption, imageCount, imgUrl);
+                //mFirebaseMethods.uploadNewPhoto(getString(R.string.new_photo), caption, imageCount, imgUrl);
+
+                if(intent.hasExtra(getString(R.string.selected_image))){
+                    imgUrl = intent.getStringExtra(getString(R.string.selected_image));
+                    mFirebaseMethods.uploadNewPhoto(getString(R.string.new_photo), caption, imageCount, imgUrl,null);
+                }
+                else if(intent.hasExtra(getString(R.string.selected_bitmap))){
+                    bitmap = (Bitmap) intent.getParcelableExtra(getString(R.string.selected_bitmap));
+                    mFirebaseMethods.uploadNewPhoto(getString(R.string.new_photo), caption, imageCount, null,bitmap);
+                }
             }
         });
 
@@ -82,18 +93,25 @@ public class NextActivity extends AppCompatActivity {
      * gets the image url from the incoming intent and displays the chosen image
      */
     private void setImage(){
-        Intent intent = getIntent();
+      //  Intent intent = getIntent();
+        intent = getIntent();
         ImageView image = (ImageView) findViewById(R.id.imageShare);
-        imgUrl = intent.getStringExtra(getString(R.string.selected_image));
 
 
-//        Log.d("ADebugTag", "Value: " + Float.toString(ReadExif(imgUrl)[0]));
-//
-//        qwer.setLatitude(23.23f);
-//        setLongitude(23.32);
+//        imgUrl = intent.getStringExtra(getString(R.string.selected_image));
+//        UniversalImageLoader.setImage(imgUrl, image, null, mAppend);
 
-
-        UniversalImageLoader.setImage(imgUrl, image, null, mAppend);    }
+        if(intent.hasExtra(getString(R.string.selected_image))){
+            imgUrl = intent.getStringExtra(getString(R.string.selected_image));
+            Log.d(TAG, "setImage: got new image url: " + imgUrl);
+            UniversalImageLoader.setImage(imgUrl, image, null, mAppend);
+        }
+        else if(intent.hasExtra(getString(R.string.selected_bitmap))){
+            bitmap = (Bitmap) intent.getParcelableExtra(getString(R.string.selected_bitmap));
+            Log.d(TAG, "setImage: got new bitmap");
+            image.setImageBitmap(bitmap);
+        }
+    }
 
      /*
     ------------------------------------ Firebase ---------------------------------------------

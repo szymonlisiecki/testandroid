@@ -23,7 +23,10 @@ public class ImageManager {
             Log.e(TAG, "getBitmap: FileNotFoundException: " + e.getMessage() );
         }finally {
             try{
-                fis.close();
+                if(fis!=null){
+                    fis.close();
+                }
+
             }catch (IOException e){
                 Log.e(TAG, "getBitmap: FileNotFoundException: " + e.getMessage() );
             }
