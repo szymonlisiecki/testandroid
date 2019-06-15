@@ -22,9 +22,14 @@ import java.util.Objects;
 
 public class ShareActivity extends AppCompatActivity {
     private static final String TAG = "ShareActivity";
+
+
     private static final int ACTIVITY_NUM = 1;
     private static final int VERIFY_PERMISSIONS_REQUEST = 1;
+
     private ViewPager mViewPager;
+
+
     private Context mContext = ShareActivity.this;
 
     @Override
@@ -34,14 +39,44 @@ public class ShareActivity extends AppCompatActivity {
         Log.d(TAG, "OnCreate: started ShareActivity");
 
 
-
-
         if(checkPermissionsArray(Permissions.PERMISSIONS)){
             setupViewPager();
         }else{
             verifyPermissions(Permissions.PERMISSIONS);
         }
     }
+    /**
+     * return the current tab number
+     * 0 = GalleryFragment
+     * 1 = PhotoFragment
+     * @return
+     */
+    public int getCurrentTabNumber() {
+        return mViewPager.getCurrentItem();
+    }
+
+    private void setupViewPager(){
+        SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new GalleryFragment());
+        adapter.addFragment(new PhotoFragment());
+
+        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager.setAdapter(adapter);
+
+        TabLayout tabLayout = findViewById(R.id.tabsBottom);
+        tabLayout.setupWithViewPager(mViewPager);
+//        Objects.requireNonNull(tabLayout.getTabAt(0)).setText(getString(R.string.gallery));
+//        Objects.requireNonNull(tabLayout.getTabAt(1)).setText(getString(R.string.photo));
+
+
+
+        tabLayout.getTabAt(0).setText(getString(R.string.gallery));
+        tabLayout.getTabAt(1).setText(getString(R.string.photo));
+
+
+
+    }
+
     public void verifyPermissions(String[] permissions){
         Log.d(TAG, "verifyPermissions: verifying permissions.");
 
@@ -51,12 +86,6 @@ public class ShareActivity extends AppCompatActivity {
                 VERIFY_PERMISSIONS_REQUEST
         );
     }
-
-    public int getTask(){
-        Log.d(TAG, "getTask: TASK: " + getIntent().getFlags());
-        return getIntent().getFlags();
-    }
-
 
     public boolean checkPermissionsArray(String[] permissions){
         Log.d(TAG, "checkPermissionsArray: checking permissions array.");
@@ -69,6 +98,8 @@ public class ShareActivity extends AppCompatActivity {
         }
         return true;
     }
+
+
     public boolean checkPermissions(String permission) {
         Log.d(TAG, "checkPermissions: checking permission: " + permission);
 
@@ -82,41 +113,18 @@ public class ShareActivity extends AppCompatActivity {
             return true;
         }
     }
-    public int getCurrentTabNumber() {
-        /*
-        zwraca numer zakladki
-        0 = GalleryFragment
-        1 = PhotoFragment
-         */
-        return mViewPager.getCurrentItem();
-
-    }
-    private void setupViewPager(){
-        SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new GalleryFragment());
-        adapter.addFragment(new PhotoFragment());
-
-        ViewPager viewPager = findViewById(R.id.container);
-        viewPager.setAdapter(adapter);
-
-        TabLayout tabLayout = findViewById(R.id.tabsBottom);
-        tabLayout.setupWithViewPager(viewPager);
-        Objects.requireNonNull(tabLayout.getTabAt(0)).setText(getString(R.string.gallery));
-        Objects.requireNonNull(tabLayout.getTabAt(1)).setText(getString(R.string.photo));
 
 
 
-
-
+    public int getTask(){
+        Log.d(TAG, "getTask: TASK: " + getIntent().getFlags());
+        return getIntent().getFlags();
     }
 
-    private void setupBottonNavigationView(){
-        Log.d(TAG, "setopBottomNavigationView");
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
-        //tu była metoda z gita, ktora zastapilem linijka z layout_bottom_navigation.xml "app:labelVisibilityMode="unlabeled">"
-        BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationView);
-        Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
-        menuItem.setChecked(true);
-    }
+
+
+
+
+
+
 }

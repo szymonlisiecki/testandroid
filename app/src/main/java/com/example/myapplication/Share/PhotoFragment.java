@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.myapplication.R;
+import com.example.myapplication.Utils.Permissions;
 
 public class PhotoFragment extends Fragment {
     private static final String TAG = "PhotoFragment";
@@ -24,24 +25,28 @@ public class PhotoFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_photo, container,false);
         Log.d(TAG,"onCreateView: started_Photo");
         Button btnLaunchCamera = (Button) view.findViewById(R.id.btnLaunchCamera);
         btnLaunchCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: Launching camera");
-               // if(((ShareActivity)getActivity()).getCurrentTabNumber() == PHOTO_FRAGMENT_NUM){
-                //TODO
-                // dodac sprawdzanie uprawnien w telefonie
+                Log.d(TAG, "onClick: launching camera.");
 
+                //Log.d(TAG, "onClick: launching camera kurwo ." + ((ShareActivity)getActivity()).getCurrentTabNumber());
+
+                if(((ShareActivity)getActivity()).getCurrentTabNumber() == PHOTO_FRAGMENT_NUM){
+                    if(((ShareActivity)getActivity()).checkPermissions(Permissions.CAMERA_PERMISSION[0])){
                         Log.d(TAG, "onClick: starting camera");
                         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        startActivityForResult(cameraIntent,CAMERA_REQUEST_CODE);
-                   // }
-
-
+                        startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+                    }else{
+                        Intent intent = new Intent(getActivity(), ShareActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
+                }
             }
         });
         return view;
