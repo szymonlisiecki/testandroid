@@ -13,10 +13,9 @@ import com.example.myapplication.R;
 public class MarkerPhotoActivity extends AppCompatActivity {
 
 
-    Intent intent = getIntent();
-    private ImageView imageView = findViewById(R.id.userPhoto);
-
-   // String text = intent.getStringExtra(MapsActivity.EXTRA_TEXT);
+    Intent intent;
+    private ImageView imageView;
+    String text;
 
 
 
@@ -26,7 +25,12 @@ public class MarkerPhotoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_marker_photo);
 
-      //  Log.d("TEXT SUKI", text);
+        Intent intent = getIntent();
+        imageView = findViewById(R.id.userPhoto);
+        String text = intent.getStringExtra(MapsActivity.EXTRA_TEXT);
+        Log.d("szymon", text);
+
+
     }
 
 

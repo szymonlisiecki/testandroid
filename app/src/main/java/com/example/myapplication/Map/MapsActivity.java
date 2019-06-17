@@ -125,7 +125,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-       // setupGridView();
+        // setupGridView();
     }
 
     /**
@@ -159,13 +159,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 ArrayList<String> imgUrls = new ArrayList<String>();
                 for(int i = 0; i < photos.size(); i++){
-                  //  Log.d(TAG, "fgdhfgh " +photos.get(i).getImage_path());
+                    //  Log.d(TAG, "fgdhfgh " +photos.get(i).getImage_path());
                     imgLati.add(photos.get(i).getLatitude());
                     imgLong.add(photos.get(i).getLongitude());
 
                     //link
                     //PHOTOIDandURL.put(photos.get(i).getPhoto_id(), photos.get(i).getImage_path());
-                   // URLandPHOTO.put(photos.get(i).getPhoto_id(), photos.get(i).getImage_path());
+                    // URLandPHOTO.put(photos.get(i).getPhoto_id(), photos.get(i).getImage_path());
 
                     globalURLs.add(photos.get(i).getImage_path());
                     globalPhotoIDs.add(photos.get(i).getPhoto_id());
@@ -175,10 +175,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     mMap.setOnMarkerClickListener(MapsActivity.this);
                     // loaded bitmap is here (bitmap)
                     myMarker = mMap.addMarker(new MarkerOptions()
-                            .position(position)
-                            //.title(photos.get(i).getCaption()+ photos.get(i).getImage_path())
-                            .title(photos.get(i).getPhoto_id())
-                           // .icon(BitmapDescriptorFactory.fromBitmap(bmap))
+                                    .position(position)
+                                    //.title(photos.get(i).getCaption()+ photos.get(i).getImage_path())
+                                    .title(photos.get(i).getPhoto_id())
+                            // .icon(BitmapDescriptorFactory.fromBitmap(bmap))
                     );
 
 
@@ -203,6 +203,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //bierzemy ID photy z markera
     public boolean onMarkerClick(final Marker marker) {
 
+        String text = "";
 
         Log.d("GOWNO po za ifem", marker.getTitle());
 
@@ -215,29 +216,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if(globalPhotoIDs.get(i) == marker.getTitle()){
                 Log.d("pobieramy url", marker.getTitle());
 
-                String text = marker.getTitle();
+                text = (String) globalURLs.get(i);
+
+                Log.d("sraka", text);
+
                 Intent intent = new Intent(MapsActivity.this, MarkerPhotoActivity.class);
                 intent.putExtra(EXTRA_TEXT, text);
 
                 startActivity(intent);
             }
         }
+        Intent intent = new Intent(MapsActivity.this, MarkerPhotoActivity.class);
+        intent.putExtra(EXTRA_TEXT, text);
 
+        startActivity(intent);
         return true;
     }
 
-    public static Bitmap scaleDown(Bitmap realImage, float maxImageSize,
-                                   boolean filter) {
-        float ratio = Math.min(
-                (float) maxImageSize / realImage.getWidth(),
-                (float) maxImageSize / realImage.getHeight());
-        int width = Math.round((float) ratio * realImage.getWidth());
-        int height = Math.round((float) ratio * realImage.getHeight());
-
-        Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, width,
-                height, filter);
-        return newBitmap;
-    }
 
 
 
