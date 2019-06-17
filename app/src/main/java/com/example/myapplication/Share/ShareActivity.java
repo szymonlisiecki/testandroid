@@ -20,6 +20,9 @@ import com.example.myapplication.Utils.SectionsPagerAdapter;
 
 import java.util.Objects;
 
+/** Klasa przeznaczona do przygotowania zdjęcia z atrybutami do udostępnienia do bazy danych
+ *
+ */
 public class ShareActivity extends AppCompatActivity {
     private static final String TAG = "ShareActivity";
 
@@ -32,6 +35,11 @@ public class ShareActivity extends AppCompatActivity {
 
     private Context mContext = ShareActivity.this;
 
+    /** \brief Metoda wywoływana przy tworzeniu activity
+     * 0 = GalleryFragment
+     * 1 = PhotoFragment
+     * @return
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +53,7 @@ public class ShareActivity extends AppCompatActivity {
             verifyPermissions(Permissions.PERMISSIONS);
         }
     }
-    /**
-     * return the current tab number
+    /** \brief Metoda przeznaczona do zwracania numeru bieżącej zakładki
      * 0 = GalleryFragment
      * 1 = PhotoFragment
      * @return
@@ -55,6 +62,10 @@ public class ShareActivity extends AppCompatActivity {
         return mViewPager.getCurrentItem();
     }
 
+    /** \brief Metoda przeznaczona do zwracania numeru bieżącej zakładki
+     * 0 = GalleryFragment
+     * 1 = PhotoFragment
+     */
     private void setupViewPager(){
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new GalleryFragment());
@@ -68,15 +79,12 @@ public class ShareActivity extends AppCompatActivity {
         Objects.requireNonNull(tabLayout.getTabAt(0)).setText(getString(R.string.gallery));
         Objects.requireNonNull(tabLayout.getTabAt(1)).setText(getString(R.string.photo));
 
-
-
-//        tabLayout.getTabAt(0).setText(getString(R.string.gallery));
-//        tabLayout.getTabAt(1).setText(getString(R.string.photo));
-
-
-
     }
 
+    /** \brief Metoda przeznaczona do sprawdzenia czy nadane są uprawnienia
+     * 0 = GalleryFragment
+     * 1 = PhotoFragment
+     */
     public void verifyPermissions(String[] permissions){
         Log.d(TAG, "verifyPermissions: verifying permissions.");
 
@@ -87,6 +95,9 @@ public class ShareActivity extends AppCompatActivity {
         );
     }
 
+    /** \brief Metoda przeznaczona do sprawdzania tabeli uprawnień
+     * @return zwraca true lub false w zależności od tego czy dane uprawnienie jest zaznaczone
+     */
     public boolean checkPermissionsArray(String[] permissions){
         Log.d(TAG, "checkPermissionsArray: checking permissions array.");
 
@@ -99,7 +110,9 @@ public class ShareActivity extends AppCompatActivity {
         return true;
     }
 
-
+    /** \brief Metoda przeznaczona do sprawdzania uprawnienia
+     * @return zwraca true lub false w zależności od tego czy dane uprawnienie jest zaznaczone
+     */
     public boolean checkPermissions(String permission) {
         Log.d(TAG, "checkPermissions: checking permission: " + permission);
 
@@ -113,7 +126,6 @@ public class ShareActivity extends AppCompatActivity {
             return true;
         }
     }
-
 
 
     public int getTask(){

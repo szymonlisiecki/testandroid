@@ -8,10 +8,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+/** Klasa przeznaczona do pobierania zdjęc przez dany URL. Zdjęcie można rzutować na bitmape.
+ *
+ */
 public class ImageManager {
 
     private static final String TAG = "ImageManager";
 
+    /** \brief zwraca tablicę bajtów z mapy bitowej
+     * quality jest z przediału <0; 100>
+     * @param imgUrl
+     * @return pobrane zdjęcie z danego URL, następnie zrzutowane na Bitmape
+     */
     public static Bitmap getBitmap(String imgUrl){
         File imageFile = new File(imgUrl);
         FileInputStream fis = null;
@@ -34,9 +43,8 @@ public class ImageManager {
         return bitmap;
     }
 
-    /**
-     * return byte array from a bitmap
-     * quality is greater than 0 but less than 100
+    /** \brief zwraca tablicę bajtów z bitmapy
+     * quality jest z przediału <0; 100>
      * @param bm
      * @param quality
      * @return

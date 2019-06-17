@@ -26,6 +26,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import com.example.myapplication.models.Photo;
 
+/** Klasa przeznaczona do udostępnienia zdjęcia z atrybutami do bazy danych
+ *
+ */
 public class NextActivity extends AppCompatActivity {
 
     private static final String TAG = "NextActivity";
@@ -39,7 +42,6 @@ public class NextActivity extends AppCompatActivity {
 
     private EditText mCaption;
 
-    Photo qwer;
     private Intent intent;
     private Bitmap bitmap;
     //vars
@@ -47,6 +49,10 @@ public class NextActivity extends AppCompatActivity {
     private int imageCount = 0;
     private String imgUrl;
 
+
+    /** \brief Metoda wywoływana przy tworzeniu activity
+     * @return
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,17 +95,12 @@ public class NextActivity extends AppCompatActivity {
         setImage();
     }
 
-    /**
-     * gets the image url from the incoming intent and displays the chosen image
+    /** \brief Metoda przeznaczona do pobierania adresu URL obrazu z przychodzącej intencji i wyświetla ten obraz
      */
     private void setImage(){
-      //  Intent intent = getIntent();
+
         intent = getIntent();
         ImageView image = (ImageView) findViewById(R.id.imageShare);
-
-
-//        imgUrl = intent.getStringExtra(getString(R.string.selected_image));
-//        UniversalImageLoader.setImage(imgUrl, image, null, mAppend);
 
         if(intent.hasExtra(getString(R.string.selected_image))){
             imgUrl = intent.getStringExtra(getString(R.string.selected_image));
@@ -117,8 +118,7 @@ public class NextActivity extends AppCompatActivity {
     ------------------------------------ Firebase ---------------------------------------------
      */
 
-    /**
-     * Setup the firebase auth object
+    /** \brief Metoda przeznaczona do skonfigurowania obiektu autoryzacji firebase
      */
     private void setupFirebaseAuth(){
         Log.d(TAG, "setupFirebaseAuth: setting up firebase auth.");

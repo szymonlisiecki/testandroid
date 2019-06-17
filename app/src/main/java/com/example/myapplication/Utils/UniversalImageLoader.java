@@ -44,10 +44,8 @@ public class UniversalImageLoader {
         return configuration;
     }
 
-    /**
-     * this method can be sued to set images that are static. It can't be used if the images
-     * are being changed in the Fragment/Activity - OR if they are being set in a list or
-     * a grid
+    /** \brief Metoda do ustawiania statycznych obrazów. Nie można jej użyć, jeśli obrazy są zmieniane
+     * w Fragmencie / Aktywności - lub jeśli są ustawiane na liście(list) lub siatce(grid)
      * @param imgURL
      * @param image
      * @param mProgressBar

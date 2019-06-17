@@ -31,6 +31,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
+/** Klasa przeznaczona do tworzenia metod którę służą do integracji aplikacji z bazą danych Firebase.
+ *
+ */
 public class FirebaseMethods {
 
     private static final String TAG = "FirebaseMethods";
@@ -46,6 +50,9 @@ public class FirebaseMethods {
     private Context mContext;
     private double mPhotoUploadProgress = 0;
 
+    /** \brief Konstruktor klasy FirebaseMethods, pobiera UID użytkownika aktualnie korzystającego z aplikacji
+     * @param context
+     */
     public FirebaseMethods(Context context) {
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -60,6 +67,15 @@ public class FirebaseMethods {
             userID = mAuth.getCurrentUser().getUid();
         }
     }
+
+    /** \brief Metoda przeznaczona do przekazywania zdjęcia do bazdy danych
+     *
+     * @param photoType
+     * @param caption
+     * @param count
+     * @param imgUrl
+     * @param bm
+     */
     public void uploadNewPhoto(String photoType, final String caption,final int count, final String imgUrl, Bitmap bm){
         Log.d(TAG, "uploadNewPhoto: attempting to uplaod new photo.");
 
@@ -80,28 +96,23 @@ public class FirebaseMethods {
                 bm = ImageManager.getBitmap(imgUrl);
             }
             byte[] bytes = ImageManager.getBytesFromBitmap(bm, 100);
-           // ByteArrayInputStream bs = new ByteArrayInputStream(bytes);
 
             UploadTask uploadTask;
             uploadTask = storageReference.putBytes(bytes);
             uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    //Uri firebaseUrl = taskSnapshot.getDownloadUr();
+
 
 
                     mStorageReference.child(filePaths.FIREBASE_IMAGE_STORAGE + "/" + user_id + "/photo" + (count + 1)).getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                         @Override
                         public void onComplete(@NonNull Task<Uri> task) {
 
-//                            final String qwer = filePaths.FIREBASE_IMAGE_STORAGE + "/" + user_id + "/photo" + (count + 15);
-//                            Log.d(TAG, "zajebisty link" +  qwer);
-//
-                       //     Log.d(TAG, "w on complete" +  ReadExif(qwer)[0]);
+
                             float tmp = Float.parseFloat(Float.toString(ReadExif(imgUrl)[0]));
                             float tmp2 = Float.parseFloat(Float.toString(ReadExif(imgUrl)[1]));
 
-                       //     Log.d(TAG, "obsrane gowno" +  Float.toString(ReadExif(imgUrl)[0]));
 
                             addPhotoToDatabase(caption,task.getResult().toString(), tmp, tmp2);
                         }
@@ -143,6 +154,9 @@ public class FirebaseMethods {
         }
 
     }
+    /** \brief Metoda przeznaczona do ustawienia zdjęcia profilowego użytkownika
+     * @param url
+     */
     private void setProfilePhoto(String url){
         Log.d(TAG, "setProfilePhoto: setting new profile image: " + url);
 
@@ -152,12 +166,21 @@ public class FirebaseMethods {
                 .setValue(url);
     }
 
+    /** \brief Metoda przeznaczona do ustawienia zdjęcia profilowego użytkownika
+     * @return sformatowana data (rok - miesiąc - dzien - godzina - minuta - sekunda)
+     */
     private String getTimestamp(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.CANADA);
         sdf.setTimeZone(TimeZone.getTimeZone("Canada/Pacific"));
         return sdf.format(new Date());
     }
 
+    /** \brief Metoda przeznaczona do dodania nowego zdjęcia do bazy danych oraz ustawienia w zdjęciu odpowiadających mu długości i szerokości geograficznej
+     * @param caption
+     * @param url
+     * @param qwe
+     * @param qwer
+     */
     private void addPhotoToDatabase(String caption, String url, float qwe, float qwer){
         Log.d(TAG, "addPhotoToDatabase: adding photo to database.");
 
@@ -172,22 +195,9 @@ public class FirebaseMethods {
         photo.setTags(tags);
         photo.setUser_id(FirebaseAuth.getInstance().getCurrentUser().getUid());
         photo.setPhoto_id(newPhotoKey);
-      //  photo.setLatitude(Float.parseFloat(qwe));
-       // photo.setLongitude(Float.parseFloat(qwer));
-        Log.d("ADebugTag", "long i lat, w addPhotooDatabase jeden " + qwe + "dupa" + qwer);
 
         photo.setLatitude(qwe);
         photo.setLongitude(qwer);
-
-//        ExifInterface exifInterface = new ExifInterface(file);
-//        exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
-        //dodanie do firebase informacji o latitude i longitude
-        Log.d("ADebugTag", "Value: " + Float.toString(ReadExif(url)[0]));
-  //      photo.setLatitude(ReadExif(photo.getImage_path())[0]);
-  //      photo.setLongitude(ReadExif(photo.getImage_path())[1]);
-
-        Log.d("ADebugTag", "photo . get image path: " + photo.getImage_path());
-
 
         //insert into database
         myRef.child(mContext.getString(R.string.dbname_user_photos))
@@ -196,6 +206,10 @@ public class FirebaseMethods {
         myRef.child(mContext.getString(R.string.dbname_photos)).child(newPhotoKey).setValue(photo);
 
     }
+
+    /** \brief Metoda przeznaczona do pobrania numeru pod którym jest zdjęcie w bazie danych
+     * @param dataSnapshot
+     */
     public int getImageCount(DataSnapshot dataSnapshot){
         int count = 0;
         for(DataSnapshot ds: dataSnapshot
@@ -207,8 +221,7 @@ public class FirebaseMethods {
         return count;
     }
 
-    /**
-     * Update 'user_account_settings' node for the current user
+    /** \brief Metoda odpowiada za zaktualizowanie węzła 'user_account_settings' dla bieżącego użytkownika
      * @param displayName
      * @param website
      * @param description
@@ -248,8 +261,7 @@ public class FirebaseMethods {
         }
     }
 
-    /**
-     * update username in the 'users' node and 'user_account_settings' node
+    /** \brief Metoda odpowiada za zaktualizowanie nazwy użytkownika w węzłach 'users' i 'user_account_settings'
      * @param username
      */
     public void updateUsername(String username){
@@ -266,8 +278,7 @@ public class FirebaseMethods {
                 .setValue(username);
     }
 
-    /**
-     * update the email in the 'user's' node
+    /** \brief Metoda odpowiada za zaktualizowanie maila węźle 'user's'
      * @param email
      */
     public void updateEmail(String email){
@@ -277,13 +288,11 @@ public class FirebaseMethods {
                 .child(userID)
                 .child(mContext.getString(R.string.field_email))
                 .setValue(email);
-
     }
 
 
 
-    /**
-     * Register a new email and password to Firebase Authentication
+    /** \brief Metoda odpowiada za rejestrację nowego maila i hasła w bazie danych
      * @param email
      * @param password
      * @param username
@@ -316,9 +325,8 @@ public class FirebaseMethods {
     }
 
 
-    /**
-     * Add information to the users nodes
-     * Add information to the user_account_settings node
+    /** \brief Metoda odpowiada za dodawanie informacji to węzła 'users'
+     * dodaję informacje do węzła 'user_account_settings'
      * @param email
      * @param username
      * @param description
@@ -352,11 +360,10 @@ public class FirebaseMethods {
     }
 
 
-    /**
-     * Retrieves the account settings for teh user currently logged in
-     * Database: user_acount_Settings node
+    /** \brief Metoda odpowiada za pobranie ustawień konta dla biężącego użytkownika
+     * baza danych: węzeł 'user_account_Settings'
      * @param dataSnapshot
-     * @return
+     * @return zwraca obiekt klasy UserSetting z ustawionymi argumentami user i settings
      */
     public UserSettings getUserSettings(DataSnapshot dataSnapshot){
         Log.d(TAG, "getUserAccountSettings: retrieving user account settings from firebase.");
@@ -453,6 +460,11 @@ public class FirebaseMethods {
         return new UserSettings(user, settings);
 
     }
+
+    /** \brief Metoda przeznaczona do pobierania ze zdjęcia położenia geograficznego
+     * @param file
+     * @return położenie geograficzne zdjęcia
+     */
     public float[] ReadExif(String file){
         Log.d(TAG, "file readexif " + file);
 

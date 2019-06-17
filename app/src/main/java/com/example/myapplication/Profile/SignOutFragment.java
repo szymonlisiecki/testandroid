@@ -18,10 +18,9 @@ import com.example.myapplication.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-/**
- * Created by User on 6/4/2017.
+/** Klasa przeznaczona do wylogowania bieżącego użytkownika
+ *
  */
-
 public class SignOutFragment extends Fragment {
 
     private static final String TAG = "SignOutFragment";
@@ -33,6 +32,11 @@ public class SignOutFragment extends Fragment {
     private ProgressBar mProgressBar;
     private TextView tvSignout, tvSigningOut;
 
+    /** \brief Metoda wywoływana przy tworzeniu widoku
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,8 +70,7 @@ public class SignOutFragment extends Fragment {
      */
 
 
-    /**
-     * Setup the firebase auth object
+    /** \brief Metoda przeznaczona do skonfigurowania obiektu autoryzacji firebase
      */
     private void setupFirebaseAuth(){
         Log.d(TAG, "setupFirebaseAuth: setting up firebase auth.");
