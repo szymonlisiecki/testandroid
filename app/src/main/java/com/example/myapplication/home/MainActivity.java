@@ -25,7 +25,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 
-
+/** Główna klasa, inicjalizowana jako pierwsza.
+ *
+ */
 public class MainActivity extends AppCompatActivity  {
 
     private static final String TAG = "HomeActivity";
@@ -52,11 +54,17 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
+    /**
+     * \brief Metoda ładuje obraz
+     */
     private void initImageLoader(){
         UniversalImageLoader universalImageLoader = new UniversalImageLoader(mContext);
         ImageLoader.getInstance().init(universalImageLoader.getConfig());
     }
 
+    /**
+     * \brief Metoda ustawia widok fragmentu
+     */
     private void setupViewPager()
     {
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -74,6 +82,9 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
+    /**
+     * \brief Metoda ustawia widok dolnego paska nawigacji
+     */
     private void setupBottonNavigationView(){
         Log.d(TAG, "setopBottomNavigationView");
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavViewBar);
@@ -90,7 +101,7 @@ public class MainActivity extends AppCompatActivity  {
      */
 
     /**
-     * checks to see if the @param 'user' is logged in
+     * Medota do sprawdzania czy dany użytkownik jest zalogowany
      * @param user
      */
     private void checkCurrentUser(FirebaseUser user){
@@ -101,8 +112,8 @@ public class MainActivity extends AppCompatActivity  {
             startActivity(intent);
         }
     }
-    /**
-     * Setup the firebase auth object
+
+    /** \brief Metoda przeznaczona do skonfigurowania obiektu autoryzacji firebase
      */
     private void setupFirebaseAuth(){
         Log.d(TAG, "setupFirebaseAuth: setting up firebase auth.");

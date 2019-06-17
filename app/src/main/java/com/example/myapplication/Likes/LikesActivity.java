@@ -13,6 +13,10 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.Utils.BottomNavigationViewHelper;
 
+
+/** Klasa przeznaczona do wyświetlania acitivity Likes
+ *
+ */
 public class LikesActivity extends AppCompatActivity {
     private static final String TAG = "LikesActivity";
     private static final int ACTIVITY_NUM = 2;

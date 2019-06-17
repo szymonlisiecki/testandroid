@@ -26,6 +26,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+
+/** Klasa przeznaczona do rejestrowania nowych kont użytkowników
+ *
+ */
 public class RegisterActivity extends AppCompatActivity {
 
     private static final String TAG = "RegisterActivity";
@@ -46,6 +50,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     private String append = "";
 
+    /** \brief Metoda wywoływana przy tworzeniu activity
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +83,9 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * \brief Metoda przeznaczona do sprawdzania czy użytkownik podał poprawnie sformatowane dane do formularza rejestracji
+     */
     private boolean checkInputs(String email, String username, String password){
         Log.d(TAG, "checkInputs: checking inputs for null values.");
         if(email.equals("") || username.equals("") || password.equals("")){
@@ -86,7 +95,7 @@ public class RegisterActivity extends AppCompatActivity {
         return true;
     }
     /**
-     * Initialize the activity widgets
+     * \brief Inicjalizacja activity widgets
      */
     private void initWidgets(){
         Log.d(TAG, "initWidgets: Initializing Widgets.");
@@ -118,7 +127,9 @@ public class RegisterActivity extends AppCompatActivity {
      */
 
     /**
-     * Check is @param username already exists in teh database
+     * /brief Metoda przeznaczona do sprawdzania czy parametr @param username
+     * istnieje już w bazie danych, jeżeli istnieje zwróci komunikat, żeby
+     * podać inną nazwe użytkownika
      * @param username
      */
     private void checkIfUsernameExists(final String username) {
@@ -159,8 +170,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Setup the firebase auth object
+    /** \brief Metoda przeznaczona do skonfigurowania obiektu autoryzacji firebase
      */
     private void setupFirebaseAuth(){
         Log.d(TAG, "setupFirebaseAuth: setting up firebase auth.");

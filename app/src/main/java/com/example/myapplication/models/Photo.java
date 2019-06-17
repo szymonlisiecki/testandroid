@@ -1,5 +1,9 @@
 package com.example.myapplication.models;
 
+
+/** Klasa przeznaczona do pobierania i ustawiania danych zdjęć użytkownika
+ *
+ */
 public class Photo {
 
     private String caption;

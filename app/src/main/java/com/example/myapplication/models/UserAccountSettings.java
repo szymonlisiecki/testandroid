@@ -1,5 +1,9 @@
 package com.example.myapplication.models;
 
+
+/** Klasa przeznaczona do pobierania i ustawiania danych ustwień użytkownika
+ *
+ */
 public class UserAccountSettings {
 
     private String description;

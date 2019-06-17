@@ -32,7 +32,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-
+/** \brief Metoda wywoływana przy tworzeniu activity
+ *
+ */
 public class AccountSettingsActivity extends AppCompatActivity {
 
     private static final String TAG = "AccountSettingsActivity";
@@ -45,7 +47,8 @@ public class AccountSettingsActivity extends AppCompatActivity {
     private RelativeLayout mRelativeLayout;
 
 
-
+    /** \brief Metoda wywoływana przy tworzeniu activity
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +75,9 @@ public class AccountSettingsActivity extends AppCompatActivity {
         });
     }
 
+    /** \brief Metoda przeznaczona do pobrania przychodzącej aktywności
+     *
+     */
     private void getIncomingIntent(){
         Intent intent = getIntent();
 
@@ -81,12 +87,18 @@ public class AccountSettingsActivity extends AppCompatActivity {
         }
     }
 
+    /** \brief Metoda przeznaczona do ustawiania fragmentów
+     *
+     */
     private void setupFragments(){
         pagerAdapter = new SectionsStatePagerAdapter(getSupportFragmentManager());
         pagerAdapter.addFragment(new EditProfileFragment(), getString(R.string.edit_profile_fragment)); //fragment 0
         pagerAdapter.addFragment(new SignOutFragment(), getString(R.string.sign_out_fragment)); //fragment 1
     }
 
+    /** \brief Metoda przeznaczona do ustawiania widoku
+     *
+     */
     private void setViewPager(int fragmentNumber){
         mRelativeLayout.setVisibility(View.GONE);
         Log.d(TAG, "setViewPager: navigating to fragment #: " + fragmentNumber);
@@ -94,6 +106,9 @@ public class AccountSettingsActivity extends AppCompatActivity {
         mViewPager.setCurrentItem(fragmentNumber);
     }
 
+    /** \brief Metoda przeznaczona do ustawiania ustawień listy
+     *
+     */
     private void setupSettingsList(){
         Log.d(TAG, "setupSettingsList: initializing 'Account Settings' list.");
         ListView listView = (ListView) findViewById(R.id.lvAccountSettings);
@@ -115,6 +130,9 @@ public class AccountSettingsActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * \brief Metoda ustawia widok dolnego paska nawigacji
+     */
     private void setupBottonNavigationView(){
         Log.d(TAG, "setopBottomNavigationView");
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavViewBar);

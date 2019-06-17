@@ -24,7 +24,9 @@ import com.example.myapplication.Utils.GridImageAdapter;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-
+/** Klasa przeznaczona do wyświetlania ProfileFragment
+ *
+ */
 public class ProfileActivity extends AppCompatActivity {
     private static final String TAG = "ProfileActivity";
     private static final int ACTIVITY_NUM = 3;
@@ -35,6 +37,9 @@ public class ProfileActivity extends AppCompatActivity {
     private ProgressBar mProgressBar;
     private ImageView profilePhoto;
 
+    /** \brief Metoda wywoływana przy tworzeniu activity
+     *
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
