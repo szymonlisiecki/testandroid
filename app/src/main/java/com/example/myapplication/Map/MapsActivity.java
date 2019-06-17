@@ -2,11 +2,14 @@ package com.example.myapplication.Map;
 
 import android.content.Context;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.myapplication.Login.LoginActivity;
+import com.example.myapplication.Login.RegisterActivity;
 import com.example.myapplication.Utils.ImageManager;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 
@@ -58,10 +61,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Vector;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback{
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private static final String TAG = "MapsActivity";
     private static final int ACTIVITY_NUM = 4;
@@ -70,7 +75,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Context context;
 
     private GoogleMap mMap;
-
+    private Marker myMarker;
 
 
     ImageView imageView;
@@ -82,8 +87,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Marker mark;
     LatLng position;
     Bitmap bmap;
+    //public static final String EXTRA_TEXT="";
+    public static final String EXTRA_TEXT = "com.example.myapplication.EXTRA_NUMBER";
+    //HashMap<String, String> PHOTOIDandURL = new HashMap<String, String>();
+    HashMap<String, String> URLandPHOTO = new HashMap<String, String>();
 
-
+    Vector globalURLs = new Vector();
+    Vector globalPhotoIDs = new Vector();
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
 
@@ -153,18 +163,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     imgLati.add(photos.get(i).getLatitude());
                     imgLong.add(photos.get(i).getLongitude());
 
+                    //link
+                    //PHOTOIDandURL.put(photos.get(i).getPhoto_id(), photos.get(i).getImage_path());
+                   // URLandPHOTO.put(photos.get(i).getPhoto_id(), photos.get(i).getImage_path());
+
+                    globalURLs.add(photos.get(i).getImage_path());
+                    globalPhotoIDs.add(photos.get(i).getPhoto_id());
 
                     position = new LatLng(imgLati.get(i), imgLong.get(i));
 
-                   //  bmap = getBitmapFromURL(photos.get(i).getImage_path());
-                //    bmap = getBitmapFromURL("https://firebasestorage.googleapis.com/v0/b/phototracker-54d8a.appspot.com/o/photos%2Fusers%2FRv5OaYsfbuetjsPBx0eCd51igSo2%2Fphoto31?alt=media&token=5bf86ee0-d199-4080-956e-029e634358c4");
-
-              //      bmap = ImageManager.getBitmap(photos.get(i).getImage_path());
-
+                    mMap.setOnMarkerClickListener(MapsActivity.this);
                     // loaded bitmap is here (bitmap)
-                    mMap.addMarker(new MarkerOptions()
+                    myMarker = mMap.addMarker(new MarkerOptions()
                             .position(position)
-                            .title(photos.get(i).getCaption())
+                            //.title(photos.get(i).getCaption()+ photos.get(i).getImage_path())
+                            .title(photos.get(i).getPhoto_id())
                            // .icon(BitmapDescriptorFactory.fromBitmap(bmap))
                     );
 
@@ -186,6 +199,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+
+    //bierzemy ID photy z markera
+    public boolean onMarkerClick(final Marker marker) {
+
+
+        Log.d("GOWNO po za ifem", marker.getTitle());
+
+        Log.d("size jest ",  String.valueOf(globalPhotoIDs.size()));
+
+        for(int i=0; i< globalPhotoIDs.size(); i++){
+
+            Log.d("pobieramy url", String.valueOf(globalPhotoIDs.get(i)));
+
+            if(globalPhotoIDs.get(i) == marker.getTitle()){
+                Log.d("pobieramy url", marker.getTitle());
+
+                String text = marker.getTitle();
+                Intent intent = new Intent(MapsActivity.this, MarkerPhotoActivity.class);
+                intent.putExtra(EXTRA_TEXT, text);
+
+                startActivity(intent);
+            }
+        }
+
+        return true;
+    }
+
     public static Bitmap scaleDown(Bitmap realImage, float maxImageSize,
                                    boolean filter) {
         float ratio = Math.min(
@@ -200,28 +240,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    public static  Bitmap downloadImage(String url) {
-        Bitmap bitmap = null;
-        InputStream stream;
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inSampleSize = 1;
 
-        try {
-            stream = getHttpConnection(url);
-            bitmap = BitmapFactory.decodeStream(stream, null, bmOptions);
-
-            if(stream!=null){
-                stream.close();
-            }
-
-
-        }
-        catch (IOException e1) {
-            e1.printStackTrace();
-            System.out.println("downloadImage"+ e1.toString());
-        }
-        return bitmap;
-    }
 
     public static  InputStream getHttpConnection(String urlString)  throws IOException {
 
@@ -246,19 +265,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    public static Bitmap getBitmapFromURL(String src) {
-        try {
-            URL url = new URL(src);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            return myBitmap;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+
 
 }
