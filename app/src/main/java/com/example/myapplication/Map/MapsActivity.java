@@ -203,31 +203,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //bierzemy ID photy z markera
     public boolean onMarkerClick(final Marker marker) {
 
-        String text = "";
-
-        Log.d("GOWNO po za ifem", marker.getTitle());
-
-        Log.d("size jest ",  String.valueOf(globalPhotoIDs.size()));
+        String text="";
 
         for(int i=0; i< globalPhotoIDs.size(); i++){
 
-            Log.d("pobieramy url", String.valueOf(globalPhotoIDs.get(i)));
+            //porównanie PhotoID, przypisanie odpowiedniego linku do zmiennej text
+            if(globalPhotoIDs.get(i).equals(marker.getTitle())){
 
-            if(globalPhotoIDs.get(i) == marker.getTitle()){
-                Log.d("pobieramy url", marker.getTitle());
+                text = globalURLs.get(i).toString();
 
-                text = (String) globalURLs.get(i);
-
-                Log.d("sraka", text);
-
-                Intent intent = new Intent(MapsActivity.this, MarkerPhotoActivity.class);
-                intent.putExtra(EXTRA_TEXT, text);
-
-                startActivity(intent);
             }
         }
-        Intent intent = new Intent(MapsActivity.this, MarkerPhotoActivity.class);
-        intent.putExtra(EXTRA_TEXT, text);
+        Intent intent = new Intent(MapsActivity.this, MarkerPhotoActivity.class)
+                .putExtra("linkDoZdjecia", text);
 
         startActivity(intent);
         return true;

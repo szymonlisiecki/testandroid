@@ -16,7 +16,7 @@ public class MarkerPhotoActivity extends AppCompatActivity {
     Intent intent;
     private ImageView imageView;
     String text;
-
+    Bundle bundle;
 
 
 
@@ -25,12 +25,17 @@ public class MarkerPhotoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_marker_photo);
 
-        Intent intent = getIntent();
         imageView = findViewById(R.id.userPhoto);
-        String text = intent.getStringExtra(MapsActivity.EXTRA_TEXT);
-        Log.d("szymon", text);
+
+        bundle = getIntent().getExtras();
+        text = bundle.getString("linkdoZdjecia");
 
 
+        text = getIntent().getStringExtra("linkDoZdjecia");
+
+        if(text !=null) {
+            Log.d("szymon", text);
+        }
     }
 
 
