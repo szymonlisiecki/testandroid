@@ -25,7 +25,7 @@ public class MarkerPhotoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_marker_photo);
 
-        imageView = findViewById(R.id.userPhoto);
+       // imageView = findViewById(R.id.userPhoto);
 
         bundle = getIntent().getExtras();
         text = bundle.getString("linkdoZdjecia");
@@ -36,6 +36,10 @@ public class MarkerPhotoActivity extends AppCompatActivity {
         if(text !=null) {
             Log.d("szymon", text);
         }
+
+
+        new DownloadImageTask((ImageView) findViewById(R.id.userPhoto))
+                .execute(text);
     }
 
 
